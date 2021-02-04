@@ -12,7 +12,7 @@ for name in runners:
     time = runners[name][0]+sum([runner[1][1] for runner in runners2])
     if time < min_time:
         min_time = time
-        answer = [name]+[runner[0] for runner in runners2][::-1]
+        answer = [name]+[runner[0] for runner in runners2]
 
 print(min_time)
 for r in answer:

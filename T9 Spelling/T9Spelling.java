@@ -8,21 +8,23 @@ public class T9Spelling {
         int n = Integer.parseInt(sc.readLine());
         for (int i = 1; i <= n; i++) {
             String word = sc.readLine();
-            String result = "Case #"+i+": ";
+            String previous = " ";
+            writer.print("Case #"+i+": ");
             for (int j = 0; j < word.length(); j++) {
                 String wk = key(word.charAt(j));
-                if (result.charAt(result.length()-1) == wk.charAt(0)) {
-                    result += " "+wk;
+                if (previous.equals(wk.substring(0,1))) {
+                    writer.print(" "+wk);
                 } else {
-                    result += wk;
+                    writer.print(wk);
                 }
+                previous = wk.substring(0,1);
             }
-            writer.println(result);
+            writer.println();
         }
         writer.flush();
     }
 
-    static String key(char c) {
+    public static String key(char c) {
         switch (c) {
           case 'a':return ("2");
           case 'b':return ("22");
