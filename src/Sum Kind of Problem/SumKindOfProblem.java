@@ -10,7 +10,14 @@ public class SumKindOfProblem {
             String[] nums = sc.readLine().split(" ");
             int k = Integer.parseInt(nums[0]);
             int p = Integer.parseInt(nums[1]);
-            writer.println(k+" "+(p*(p+1))/2+" "+p*p+" "+p*(p+1));
+			writer.print(k);
+			writer.print(" ");
+			writer.print((p*(p+1))/2);
+			writer.print(" ");
+			writer.print(p*p);
+			writer.print(" ");
+			writer.print(p*(p+1));
+			writer.println();
         }
         writer.flush();
     }
