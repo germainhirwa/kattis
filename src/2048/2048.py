@@ -1,21 +1,6 @@
 def flatten(mat):
     return [num for row in mat for num in row]
 
-def has_zero(mat):
-    temp = flatten(mat)
-    return 0 in temp
-
-def add_two(mat):
-    if has_zero(mat):
-        zeroes = []
-        for i in range(len(mat)):
-            for j in range(len(mat[i])):
-                if mat[i][j]==0:
-                    zeroes.append((i,j))
-        added = randint(0,len(zeroes)-1)
-        mat[zeroes[added][0]][zeroes[added][1]] = 2
-    return mat
-
 def transpose(mat):
     return [[row[i] for row in mat] for i in range(len(mat[0]))]
 
