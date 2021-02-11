@@ -70,38 +70,38 @@ public class FerryLoading4 {
 }
 
 class QueueArr {
-	public int[] arr;
-	public int front, back;
-	public int capacity;
+    public int[] arr;
+    public int front, back;
+    public int capacity;
     public int length;
 
-	public QueueArr(int size) {
-		arr = new int[size+1];
-		front = 0;
-		back = 0;
-		capacity = size+1;
-	}
+    public QueueArr(int size) {
+        arr = new int[size+1];
+        front = 0;
+        back = 0;
+        capacity = size+1;
+    }
 
-	public boolean empty() { 
-		return (front == back); 
-	}
+    public boolean empty() { 
+        return (front == back); 
+    }
 
-	public Integer peek() {
-		if (empty()) return null;
-		else return arr[front];
-	}
+    public Integer peek() {
+        if (empty()) return null;
+        else return arr[front];
+    }
 
-	public Integer poll() {
-		if (empty()) return null;
-		Integer item = arr[front];
-		front = (front + 1) % capacity;
+    public Integer poll() {
+        if (empty()) return null;
+        Integer item = arr[front];
+        front = (front + 1) % capacity;
         length--;
-		return item;
-	}
+        return item;
+    }
 
-	public void offer(Integer item) {
-		arr[back] = item;
-		back = (back + 1) % capacity;
+    public void offer(Integer item) {
+        arr[back] = item;
+        back = (back + 1) % capacity;
         length++;
-	}
+    }
 }
