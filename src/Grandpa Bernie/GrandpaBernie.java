@@ -11,7 +11,7 @@ public class GrandpaBernie {
         Map<String,List<Integer>> hm = new HashMap<String,List<Integer>>();
         Map<String,Integer> sorted = new HashMap<String,Integer>(); // changed from ArrayList due to TLE
 
-        while (trips > 0) { // minimize new variables
+        while (trips-- > 0) { // minimize new variables
             String[] line = sc.readLine().split(" ");
             String country = line[0];
             int year = Integer.parseInt(line[1]);
@@ -22,11 +22,10 @@ public class GrandpaBernie {
                 years.add(year);
                 hm.put(country,years);
             }
-            trips--;
         }
 
         int queries = Integer.parseInt(sc.readLine());
-        while (queries > 0) { // minimize new variables
+        while (queries-- > 0) { // minimize new variables
             String[] line = sc.readLine().split(" ");
             String country = line[0];
             int idx = Integer.parseInt(line[1]);
@@ -35,7 +34,6 @@ public class GrandpaBernie {
                 sorted.put(country,1);
             }
             writer.println(hm.get(country).get(idx-1));
-            queries--;
         }
 
         writer.flush();

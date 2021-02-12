@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class T9Spelling3 {
+public class T9Spelling {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);

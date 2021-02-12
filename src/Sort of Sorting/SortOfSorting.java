@@ -17,7 +17,7 @@ public class SortOfSorting {
                 break;
             }
             List<String> names = new ArrayList<>();
-            for (int i = 0; i < num; i++) {
+            while (num-- > 0) {
                 names.add(sc.readLine());
             }
             Collections.sort(names, new Comparator<String>() {
@@ -25,7 +25,7 @@ public class SortOfSorting {
                     return (name1.substring(0,2)).compareTo(name2.substring(0,2));
                 }
             });
-            for (int i = 0; i < num; i++) {
+            for (int i = 0; i < names.size(); i++) {
                 writer.println(names.get(i));
             }
             flag = true;

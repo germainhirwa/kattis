@@ -11,7 +11,7 @@ public class BestRelayTeam {
         Leg2Comparator leg2Comp = new Leg2Comparator();
         
         // input and insert everything
-        for (int r = 0; r < queries; r++) {
+        while (queries-- > 0) {
             String[] line = sc.readLine().split(" ");
             String name = line[0];
             double leg1 = Double.parseDouble(line[1]);

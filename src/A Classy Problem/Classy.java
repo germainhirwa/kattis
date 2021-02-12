@@ -1,5 +1,3 @@
-// Not really optimal, but does the job
-
 import java.io.*;
 import java.util.*;
 
