@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class InverseFactorial { // always change the name of the public class!
+public class InverseFactorial {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);
