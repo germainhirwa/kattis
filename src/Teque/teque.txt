@@ -1,0 +1,96 @@
+Visualization (adopted from 1st test case)
+
+Notes:
+[x] true index of the element in the teque, equivalent to get(x)
+{x} key in the hashmap, based on the value of the min and max pointers
+nL = minLeft    xL = maxLeft
+nR = minRight   xR = maxRight
+
+Instead of calling the size() function, I kept track of the sizes with two variables.
+
+Every push back, increment xR by 1.
+Every push front, decrement nL by 1.
+Every push middle, increment xL by 1.
+
+Balancing move occurs when leftSize-rightSize is neither 0 nor 1.
+Every balancing move, either move from left to right or right to left. Consider cases where map size after removal is 0.
+The rest follows.
+
+STEP 0 INITIAL STATE
+______      ______
+left        right       (Initial)
+nL = 0      nR = -1
+xL = 1      xR = 0
+size = 0    size = 0
+
+STEP 1A PUSH BACK 9
+                [0]
+                {0}
+______      _____9
+left        right       (pb 9)
+nL = 0      nR = -1
+xL = 1      xR = 1
+size = 0    size = 1
+
+STEP 1B BALANCE
+    [0]
+    {1}
+_____9      ______
+left        right       (balance to the right of Left)
+nL = 0      nR = -1     (special case where rightSize after removal is 0)
+xL = 2      xR = 0
+size = 1    size = 0
+
+STEP 2A PUSH FRONT 3
+[0] [1]
+{0} {1}
+3____9      ______
+left        right       (pf 3)
+nL = -1     nR = -1
+xL = 2      xR = 0
+size = 2    size = 0
+
+STEP 2B BALANCE
+[0]         [1]
+{0}         {-1}
+3_____      9_____
+left        right       (balance to the left of Right)
+nL = -1     nR = -2
+xL = 1      xR = 0
+size = 1    size = 1
+
+STEP 3 PUSH MIDDLE 5 (no balancing needed!)
+[0] [1]         [2]
+{0} {1}         {-1}
+3____5      _____9
+left        right       (pm 5)
+nL = -1     nR = -2
+xL = 2      xR = 0
+size = 2    size = 1
+
+STEP 4A PUSH MIDDLE 1
+[0][1][2]       [3]
+{0}{1}{2}      {-1}
+3__5__1     _____9
+left        right       (pm 1)
+nL = -1     nR = -2
+xL = 3      xR = 0
+size = 3    size = 1
+
+STEP 4B BALANCE
+[0] [1]     [2] [3]
+{0} {1}     {-2}{-1}
+3____5      1____9
+left        right       (balance to the left of Right)
+nL = -1     nR = -3
+xL = 2      xR = 0
+size = 2    size = 2
+
+STEP 5 PUSH FRONT 7 (no balancing needed!)
+[0][1][2]    [3] [4]
+{-1}{0}{1}   {-2}{-1}
+7__3__5      1____9
+left        right       (pl 7)
+nL = -2     nR = -3
+xL = 2      xR = 0
+size = 3    size = 2
