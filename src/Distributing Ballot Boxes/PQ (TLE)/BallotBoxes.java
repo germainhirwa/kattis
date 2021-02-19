@@ -1,3 +1,5 @@
+// TLE Version
+
 import java.io.*;
 import java.util.*;
 
@@ -20,7 +22,7 @@ public class BallotBoxes {
             PriorityQueue pq = new PriorityQueue();
             for (int i = 0; i < N; i++) { // parse everything into the PQ
                 long[] ballotCount = new long[2];
-                ballotCount[1] = 1; // every city must at least 1 ballot box
+                ballotCount[1] = 1; // every city must have at least 1 ballot box
                 ballotCount[0] = Long.parseLong(sc.readLine()); // scan n, number of citizens
                 pq.insert(ballotCount);
             }
@@ -105,8 +107,6 @@ class PriorityQueue {
             A.set(1, A.get(PriorityQueueSize));
             PriorityQueueSize--; // virtual decrease
             shiftDown(1);
-        } else {
-            return new long[2]; // dummy
         }
         return maxV;
     }
@@ -114,3 +114,21 @@ class PriorityQueue {
     int size() { return PriorityQueueSize; }
     boolean isEmpty() { return PriorityQueueSize == 0; }
 }
+
+/*
+Visualization
+
+6 boxes, 4 cities, distribute 2 remaining boxes
+
+120  2680  3400  200
+ 1    1     1     1     (3400 is the highest, add 1 box)
+
+120  2680  3400  200
+ 1    1     2     1
+120  2680  1700  200    (2680 is the highest, add 1 box)
+
+120  2680  3400  200
+ 1    2     2     1
+120  1340  1700  200    (2 boxes added, highest is 1700)
+
+*/
