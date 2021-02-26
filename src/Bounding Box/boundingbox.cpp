@@ -5,7 +5,7 @@ using namespace std;
 int main()
 {
     int n;
-    long double x1, y1, x2, y2, x3, y3, a, b, c, d, e, f, x, y, R, w, maxX, minX, maxY, minY, currX, currY, result;
+    double x1, y1, x2, y2, x3, y3, a, b, c, d, e, f, x, y, inc, maxX, minX, maxY, minY, currX, currY, tempX, tempY;
 
     while (true) {
         cin >> n;
@@ -27,32 +27,22 @@ int main()
         // X and Y are the coordinates of the circumcenter, R the radius
         x = (c*e-b*f)/(a*e-b*d);
         y = (c*d-a*f)/(b*d-a*e);
-        R = sqrtl((x1-x)*(x1-x)+(y1-y)*(y1-y));
 
         // Initial angle
-        w = acosl((x1-x)/R);
-        maxX = x1, maxY = y1, minX = x1, minY = x1;
+        inc = 2*M_PI/n;
+        maxX = x1, maxY = y1, minX = x1, minY = y1, currX = x1, currY = y1;
         for (int i = 0; i < n; i++) { // use 0 again for double-check
-            w += 2*M_PI/n;
-            currX = x + R*cosl(w);
-            currY = y + R*sinl(w);
-            if (currX > maxX) {
-                maxX = currX;
-            }
-            if (currX < minX) {
-                minX = currX;
-            }
-            if (currY > maxY) {
-                maxY = currY;
-            }
-            if (currY < minY) {
-                minY = currY;
-            }
+            tempX = (currX-x)*cos(inc) - (currY-y)*sin(inc) + x;
+            tempY = (currX-x)*sin(inc) + (currY-y)*cos(inc) + y;
+            currX = tempX, currY = tempY;
+            maxX = max(maxX,currX);
+            maxY = max(maxY,currY);
+            minX = min(minX,currX);
+            minY = min(minY,currY);
         }
 
         // Final result
-        result = (maxX-minX)*(maxY-minY);
-        printf("%.10Lf\n", result);
+        printf("%.10lf\n", (maxX-minX)*(maxY-minY));
     }
 
     return 0;
