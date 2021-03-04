@@ -29,7 +29,7 @@ public class GrandpaBernie {
             String[] line = sc.readLine().split(" ");
             String country = line[0];
             int idx = Integer.parseInt(line[1]);
-            if (!sorted.containsKey(country)) {
+            if (sorted.get(country) == null) {
                 Collections.sort(hm.get(country));
                 sorted.put(country,1);
             }

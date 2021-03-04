@@ -18,7 +18,7 @@ public class Conformity {
             for (int j = 0; j < 5; j++) {
                 combination *= (901-Integer.parseInt(line[j])); // random thought and number
             }
-            if (hm.containsKey(combination)) {
+            if (hm.get(combination) != null) {
                 hm.put(combination,hm.get(combination)+1);
                 maxPop = Math.max(hm.get(combination),maxPop);
             } else {

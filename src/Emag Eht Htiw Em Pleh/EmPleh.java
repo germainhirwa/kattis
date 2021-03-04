@@ -38,7 +38,7 @@ public class EmPleh {
                 writer.print("|");
                 if ((row+col) % 2 == 0) {
                     writer.print('.');
-                    if (hm.containsKey(alphabets[col]+row)) {
+                    if (hm.get(alphabets[col]+row) != null) {
                         writer.print(hm.get(alphabets[col]+row));
                     } else {
                         writer.print('.');
@@ -46,7 +46,7 @@ public class EmPleh {
                     writer.print('.');
                 } else {
                     writer.print(':');
-                    if (hm.containsKey(alphabets[col]+row)) {
+                    if (hm.get(alphabets[col]+row) != null) {
                         writer.print(hm.get(alphabets[col]+row));
                     } else {
                         writer.print(':');
