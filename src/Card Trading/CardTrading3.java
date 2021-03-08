@@ -1,4 +1,4 @@
-// Using Reader class to further improve I/O runtime
+// Using Reader class
 
 import java.io.*;
 import java.util.*;
@@ -24,30 +24,19 @@ public class CardTrading3 {
             while (c <= ' ') {
                 c = read();
             }
-            boolean neg = (c == '-');
-            if (neg)
-                c = read();
             do {
                 ret = ret * 10 + c - '0';
             } while ((c = read()) >= '0' && c <= '9');
- 
-            if (neg)
-                return -ret;
             return ret;
-        }
- 
-        private void fillBuffer() throws IOException
-        {
-            bytesRead = din.read(buffer, bufferPointer = 0,
-                                 BUFFER_SIZE);
-            if (bytesRead == -1)
-                buffer[0] = -1;
         }
  
         private byte read() throws IOException
         {
             if (bufferPointer == bytesRead)
-                fillBuffer();
+                bytesRead = din.read(buffer, bufferPointer = 0,
+                                 BUFFER_SIZE);
+                if (bytesRead == -1)
+                    buffer[0] = -1;
             return buffer[bufferPointer++];
         }
     }
@@ -106,17 +95,10 @@ class CardContainer {
     
     public void setBuy(int buy) {this.buy = buy;}
     public void setSell(int sell) {this.sell = sell;}
-
-    // Visualizer, if needed
-    // public String toString() {return this.type + " & buy " + this.buy + " & sell " + this.sell + " & value " + (this.buy+this.sell);}
 }
 
 class BSValueComparator implements Comparator<CardContainer> {
     public int compare(CardContainer c1, CardContainer c2) {
         return (c1.buy+c1.sell)-(c2.buy+c2.sell);
-    }
-
-    public boolean equals(Object obj) {
-        return this == obj;
     }
 }
