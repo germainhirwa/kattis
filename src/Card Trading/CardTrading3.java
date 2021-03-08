@@ -50,7 +50,6 @@ public class CardTrading3 {
                 fillBuffer();
             return buffer[bufferPointer++];
         }
-
     }
 
     public static void main(String[] args) throws IOException {
