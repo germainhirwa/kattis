@@ -1,22 +1,59 @@
+// Using Reader class to further improve I/O runtime
+
 import java.io.*;
 import java.util.*;
 
-public class Workstations {
+public class Workstations2 {
+    static class Reader {
+        final private int BUFFER_SIZE = 1 << 16;
+        private DataInputStream din;
+        private byte[] buffer;
+        private int bufferPointer, bytesRead;
+
+        public Reader() {
+            din = new DataInputStream(System.in);
+            buffer = new byte[BUFFER_SIZE];
+            bufferPointer = bytesRead = 0;
+        }
+
+        public int nextInt() throws IOException {
+            int ret = 0;
+            byte c = read();
+            while (c <= ' ') {
+                c = read();
+            }
+            do {
+                ret = ret * 10 + c - '0';
+            } while ((c = read()) >= '0' && c <= '9');
+            return ret;
+        }
+
+        private void fillBuffer() throws IOException {
+            bytesRead = din.read(buffer, bufferPointer = 0,
+                                 BUFFER_SIZE);
+            if (bytesRead == -1)
+                buffer[0] = -1;
+        }
+
+        private byte read() throws IOException {
+            if (bufferPointer == bytesRead)
+                fillBuffer();
+            return buffer[bufferPointer++];
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        InputStreamReader inp = new InputStreamReader(System.in);
-        BufferedReader sc = new BufferedReader(inp);
+        Reader sc = new Reader();
         PrintWriter writer = new PrintWriter(System.out);
         
-        String[] line = sc.readLine().split(" ");
-        int n = Integer.parseInt(line[0]);
-        int m = Integer.parseInt(line[1]);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
         BinaryHeapR pqR = new BinaryHeapR();
         BinaryHeapW pqW = new BinaryHeapW();
 
         for (int i = 0; i < n; i++) {
-            String[] line2 = sc.readLine().split(" ");
-            int a = Integer.parseInt(line2[0]);
-            int s = Integer.parseInt(line2[1]);
+            int a = sc.nextInt();
+            int s = sc.nextInt();
             pqR.insert(new Researcher(a,s)); // insert the researchers into the researcher PQ
         }
 
@@ -68,7 +105,7 @@ class Workstation {
     }
 
     public int compareTo(Workstation another) {
-        return (int) (this.curr - another.curr);
+        return this.curr - another.curr;
     }
 }
 
@@ -82,7 +119,7 @@ class Researcher {
     }
 
     public int compareTo(Researcher another) {
-        return (int) (this.arrTime - another.arrTime);
+        return this.arrTime - another.arrTime;
     }
 }
 
