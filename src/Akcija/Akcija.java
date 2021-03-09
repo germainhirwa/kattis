@@ -16,7 +16,7 @@ public class Akcija {
         Collections.sort(prices);
         int ans = 0;
         for (int j = queries-1; j >= 0; j--) {
-            if (queries-j % 3 != 0) {
+            if ((queries-j) % 3 != 0) {
                 ans += prices.get(j);
             }
         }

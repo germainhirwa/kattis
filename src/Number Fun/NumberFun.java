@@ -8,8 +8,7 @@ public class NumberFun {
         int queries = Integer.parseInt(sc.readLine());
         for (int i=0; i<queries; i++) {
             int[] result = new int[3];
-            String x = sc.readLine();
-            String[] y = x.trim().split("\\s+");
+            String[] y = sc.readLine().split(" ");
             for (int j = 0; j < 3; j++) {
                 result[j] = Integer.parseInt(y[j]);
             }
