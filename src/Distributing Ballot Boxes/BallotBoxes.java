@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BallotBoxes5 {
+public class BallotBoxes {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);

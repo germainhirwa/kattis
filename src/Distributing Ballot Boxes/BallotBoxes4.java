@@ -1,24 +1,20 @@
-// Using Reader class to further improve I/O runtime
-
 import java.io.*;
 import java.util.*;
 
-public class BallotBoxes2 {
+public class BallotBoxes4 {
     static class Reader {
         final private int BUFFER_SIZE = 1 << 16;
         private DataInputStream din;
         private byte[] buffer;
         private int bufferPointer, bytesRead;
- 
-        public Reader()
-        {
+
+        public Reader() {
             din = new DataInputStream(System.in);
             buffer = new byte[BUFFER_SIZE];
             bufferPointer = bytesRead = 0;
         }
- 
-        public int nextInt() throws IOException
-        {
+
+        public int nextInt() throws IOException {
             int ret = 0;
             byte c = read();
             while (c <= ' ') {
@@ -30,28 +26,33 @@ public class BallotBoxes2 {
             do {
                 ret = ret * 10 + c - '0';
             } while ((c = read()) >= '0' && c <= '9');
- 
             if (neg)
                 return -ret;
             return ret;
         }
- 
-        private void fillBuffer() throws IOException
-        {
+
+        private void fillBuffer() throws IOException {
             bytesRead = din.read(buffer, bufferPointer = 0,
                                  BUFFER_SIZE);
             if (bytesRead == -1)
                 buffer[0] = -1;
         }
- 
-        private byte read() throws IOException
-        {
+
+        private byte read() throws IOException {
             if (bufferPointer == bytesRead)
                 fillBuffer();
             return buffer[bufferPointer++];
         }
     }
-
+    
+    public static int ballots(int avg, List<Integer> pops) {
+        int ans = 0;
+        for (int i : pops) {
+            ans += Math.ceil(i/(double) avg);
+        }
+        return ans;
+    }
+    
     public static void main(String[] args) throws IOException {
         Reader sc = new Reader();
         PrintWriter writer = new PrintWriter(System.out);
@@ -65,52 +66,27 @@ public class BallotBoxes2 {
             }
 
             int B = sc.nextInt();
+            int maxPop = 0;
 
-            List<Integer> cities = new ArrayList<Integer>();
-            int maxPop = 0, minPop = 1, midPop;
-            for (int i = 0; i < N; i++) { // parse everything into the PQ
+            List<Integer> pops = new ArrayList<Integer>();
+            while (N-- > 0) {
                 // scan n, number of citizens
-                // every city must have at least 1 ballot box
-                int k = sc.nextInt();
-                cities.add(k);
-                maxPop = Math.max(k,maxPop);
+                int n = sc.nextInt();
+                maxPop = Math.max(maxPop,n);
+                pops.add(n);
             }
-
-            while (minPop < maxPop) { // we're going to make it equal
-                midPop = (maxPop+minPop)/2;
-
-                int boxes = 0;
-                for (int i = 0; i < N; i++) {
-                    boxes += (cities.get(i)+midPop-1)/midPop;
-                }
-
-                if (boxes > B) {
-                    minPop = midPop+1;
-                } else {
-                    maxPop = midPop;
-                }
+            
+            int hi = maxPop, lo = 1;
+            
+            // Binary search
+            while (lo + 1 != hi) {
+                int mid = (hi+lo)/2;
+                if (ballots(mid,pops) > B)
+                    lo = mid;
+                else // < B
+                    hi = mid;
             }
-
-            // extract the maximum ceil(N/ballot count)
-            writer.println(minPop); // final result
+            writer.println(lo+1);
         }
     }
 }
-
-/*
-Visualization
-
-6 boxes, 4 cities, distribute 2 remaining boxes
-
-120  2680  3400  200
- 1    1     1     1     (3400 is the highest, add 1 box)
-
-120  2680  3400  200
- 1    1     2     1
-120  2680  1700  200    (2680 is the highest, add 1 box)
-
-120  2680  3400  200
- 1    2     2     1
-120  1340  1700  200    (2 boxes added, highest is 1700)
-
-*/
