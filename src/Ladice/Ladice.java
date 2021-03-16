@@ -12,25 +12,25 @@ public class Ladice {
         String[] line = sc.readLine().split(" ");
         int N = Integer.parseInt(line[0]);
         int L = Integer.parseInt(line[1]);
+
+        // Create a UFDS with L elements (L sets initially)
         UnionFind ufds = new UnionFind(L);
         while (N-- > 0) {
             String[] line2 = sc.readLine().split(" ");
             int A = Integer.parseInt(line2[0])-1;
             int B = Integer.parseInt(line2[1])-1;
+
+            // Union the A-th drawer and the B-th drawer in the UFDS
             ufds.unionSet(A,B);
 
-            // The 2 first rules are equivalent considering the UFDS algorithm, and so are the 2 last rules
+            // The 2 first rules are equivalent considering the UFDS algorithm, and same for the 2 last rules they are equivalent in this case
             int parentA = ufds.findSet(A);
-            if (ufds.fill[parentA] != 0) {
+            if (ufds.fill[parentA] != 0) { // we still have a slot!
                 ufds.fill[parentA]--;
                 writer.println("LADICA");
-            } else {
+            } else { // no slot, throw
                 writer.println("SMECE");
             }
-            /*
-            writer.println(A+" "+B);
-            writer.println(Arrays.toString(ufds.p));
-            */
         }
 
         writer.flush();
@@ -41,7 +41,7 @@ class UnionFind {
     public int[] p;
     public int[] rank;
     public int numSets;
-    public int[] fill; // number of items in itself and nodes below it
+    public int[] fill; // number of items in the set containing itself (will take the representatives only)
 
     public UnionFind(int N) {
         p = new int[N];
@@ -70,13 +70,13 @@ class UnionFind {
             numSets--; 
             int x = findSet(i), y = findSet(j);
             if (rank[x] > rank[y]) {
-            	p[y] = x;
-                fill[x] += fill[y];
+                p[y] = x;
+                fill[x] += fill[y]; // add fill to the representative
             } else { 
-            	p[x] = y;
+                p[x] = y;
                 if (rank[x] == rank[y]) {
                     rank[y] = rank[y]++;
-                    fill[y] += fill[x];
+                    fill[y] += fill[x]; // add fill to the representative
                 }
             } 
         } 
