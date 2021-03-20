@@ -3,6 +3,7 @@
 import java.io.*;
 import java.util.*;
 
+// Create a team class which stores the number of problems solved and the sum of its penalty
 class Team {
     public int id;
     public int solved;
@@ -15,6 +16,11 @@ class Team {
         penalty = 0;
     }
 
+    // The parameter for the AVL tree, given the current (solved,penalty) combination, I want to convert it to long like this
+    //         _ _ _ _ _ _                      _ _ _ _ _ _ _ _ _                      _
+    //  6 digit for solved problems        9 digit for total penalty     1/0 whether it's team 1 or not
+    // Penalty is sorted in descending order, so I used (10^8 - penalty) for the second slot since total penalty <= 10^5 * 1000 = 10^8
+    // Call the result the value of the team
     public long getValue() {
         // give priority for team 1 in case of both ties
         return (long) (solved*Math.pow(10,10)+10*(Math.pow(10,8)-penalty)+(id == 1 ? 1 : 0));
@@ -42,6 +48,7 @@ class Vertex {
 class AVL {
     public Vertex root;
 
+    // Constructor
     public AVL() {
         root = null;
     }
@@ -141,6 +148,7 @@ class AVL {
         }
     }
 
+    // Updates height recursively, will be used for insertion/deletion
     public void updateHeight(Vertex T) {
         if (T.left != null && T.right != null)  // have both L and R children
             T.height = Math.max(T.left.height,T.right.height) + 1;
@@ -152,6 +160,7 @@ class AVL {
             T.height = 0;
     }
 
+    // Updates size recursively, will be used for insertion/deletion
     // Since the AVL can have duplicate values, we store the frequency in the count attribute for each vertex
     public void updateSize(Vertex T) {
         // conditioning similar to updateHeight
@@ -249,6 +258,7 @@ class AVL {
     }
 
     public Vertex leftRotate(Vertex T) { // given T.right is not null
+        // Correct the pointers one by one without breaking the links between each node
         Vertex w = T.right;
         w.parent = T.parent;
         T.parent = w;
@@ -262,10 +272,12 @@ class AVL {
         updateHeight(w);
         updateSize(w);
 
+        // Must return instead of void to update recursively
         return w;
     }
 
     public Vertex rightRotate(Vertex T) { // given T.left is not null
+        // Mirrored version of leftRotate
         Vertex w = T.left;
         w.parent = T.parent;
         T.parent = w;
@@ -284,7 +296,7 @@ class AVL {
 
     public Vertex rebalance(Vertex T) {
         if (T != null) {
-            if (bf(T) == 2) { // T has a left child
+            if (bf(T) == 2) { // T has a left child since bf > 0
                 if (bf(T.left) == -1) { // LR case
                     T.left = leftRotate(T.left);
                 }
@@ -292,7 +304,7 @@ class AVL {
                 // Either LL or LR case, do this
                 T = rightRotate(T);
             }
-            else if (bf(T) == -2) { // T has a right child
+            else if (bf(T) == -2) { // T has a right child since bf < 0
                 if (bf(T.right) == 1) { // RL case
                     T.right = rightRotate(T.right);
                 }
@@ -374,19 +386,21 @@ public class GCPC2 {
         int m = sc.nextInt();
         
         // We assume that all teams have different team value since it is an AVL tree!
-        AVL avl = new AVL();
-        List<Team> teams = new ArrayList<Team>();
+        AVL avl = new AVL(); // create new AVL tree
+        List<Team> teams = new ArrayList<Team>(); // database for storing (solved,penalty) of each team
         for (int i = 0; i < n; i++) {
-            teams.add(new Team(i+1));
-            avl.insert(teams.get(i).getValue());
+            teams.add(new Team(i+1)); // new team, insert to database
+            avl.insert(teams.get(i).getValue()); // also insert the team value to AVL, which has handled duplicate values
         }
+
+        // At this point, the AVL will contain only 2 nodes. The first node is the score for team 1, and the other is for the n-1 teams
 
         while (m-- > 0) {
             int t = sc.nextInt()-1;
             int p = sc.nextInt();
-            long prev = teams.get(t).getValue();
-            teams.get(t).solved++;
-            teams.get(t).penalty += p;
+            long prev = teams.get(t).getValue(); // obtain the value of the team previously
+            teams.get(t).solved++; // update number of solved problems
+            teams.get(t).penalty += p; // update penalty score
             avl.delete(prev); // delete the previous score of team t+1;
             avl.insert(teams.get(t).getValue()); // insert the updated score;
             writer.println(n+1-avl.rank(teams.get(0).getValue())); // team 1, reverse order so n+1-rank
