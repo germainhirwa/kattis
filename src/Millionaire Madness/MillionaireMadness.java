@@ -129,12 +129,12 @@ class AdjacencyList { // D/W graph DS
         numVertices = V; // number of vertices
         coins = arr; // store the coin 2D array here for easy access
         list = new ArrayList<List<Pair>>(); // main adjacency list
+        taken = new boolean[V]; // taken boolean array for MST method
+        
         for (int i = 0; i < V; i++) {
             list.add(new ArrayList<Pair>());
+            taken[i] = false; // Initalize to false
         }
-        taken = new boolean[numVertices]; // taken boolean array for MST method
-        for (int i = 0; i < numVertices; i++)
-            taken[i] = false;
 
         // Priority queue for MST, decided to make a queue of triples and not pairs so that I can convert to AL form easily, i.e. list of pairs
         PrimComparator pc = new PrimComparator();

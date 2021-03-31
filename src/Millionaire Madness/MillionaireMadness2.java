@@ -126,14 +126,12 @@ class AdjacencyList { // D/W graph DS
         numVertices = V; // number of vertices
         coins = arr; // store the coin 2D array here for easy access
         list = new ArrayList<List<Pair>>(); // main adjacency list
+        taken = new boolean[V]; // taken boolean array for MST method
+        parent = new int[V]; // and a parent array to backtrack from destination after the MST path is formed
+        
         for (int i = 0; i < V; i++) {
             list.add(new ArrayList<Pair>());
-        }
-        taken = new boolean[numVertices]; // taken boolean array for MST method
-        parent = new int[numVertices]; // and a parent array to backtrack from destination after the MST path is formed
-        
-        for (int i = 0; i < numVertices; i++) {
-            taken[i] = false;
+            taken[i] = false; // Initialize to false
             parent[i] = -1; // Initialize to -1
         }
 
