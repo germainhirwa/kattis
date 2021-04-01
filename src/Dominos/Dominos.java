@@ -45,14 +45,22 @@ public class Dominos {
         Reader sc = new Reader();
         PrintWriter writer = new PrintWriter(System.out);
 
-        // The whole problem revolves around counting "strongly connected components" in a graph (SCC)
-        // Actually we're just using the Kosaraju's algorithm but we're not transposing the graph
         /*
-            The key here is to convert the graph into a DAG, since the graph may contain a cycle
-            It turns out that Kosaraju's Algorithm can do this after doing topological sort
-            Any unvisited vertex before the next DFS traversal must have no incoming edge, i.e. the domino we should knock
+        I will model the problem with a graph where the dominos are the vertices and the relations are the edges.
+        Our goal is to find the number of vertices with no incoming edges, i.e. there is no other domino that knocks this domino.
+        Then the DFS spanning tree from each vertex will cover all the vertices related to that each vertex.
+        In other word, the DFS spanning tree from a vertex will tell you the dominos that will be knocked if the source domino is knocked.
+        Using BFS instead of DFS is possible but will make the code longer as I will reuse DFS for the second traversal.
+
+        This is similar to Kosaraju's algorithm, especially in the DFS toposort part.
+        By doing DFS toposort, we have actually converted the graph into a DAG, as the initial graph may contain a cycle.
+        After this, we have obtained a "topological ordering" of the graph.
+        In other word, if we knock the dominos in that order, it will minimize the number of knocks.
+
+        Now simply run DFS traversal again. This part is similar to UFDS but I decided to use the DFSRecursive method again.
+        Start from the first vertex that is in the topological order (the output array will be in reverse so the rightmost vertex)
+        For each new unvisited vertex that is met after a DFS recursive traversal, add the final answer by 1.
         */
-        // I will use Adjacency List to represent the graph
 
         int t = sc.nextInt(); // number of test cases
         while (t-- > 0) {
@@ -72,8 +80,8 @@ public class Dominos {
 class AdjacencyList { // D/U graph DS
     public List<List<Integer>> list;
     public int numVertices;
-    public boolean[] visited;
-    public List<Integer> toposort;
+    public boolean[] visited; // visited boolean array
+    public List<Integer> toposort; // to store the topological ordering of the graph which is converted to DAG
 
     public AdjacencyList (int V) {
         numVertices = V; // number of vertices
@@ -99,6 +107,8 @@ class AdjacencyList { // D/U graph DS
     }
 
     public void DFSRecursive (int u, boolean forToposort) { // Recursive DFS traversal
+                                                            // Added a boolean forToposort because we are going to run DFSRecursive for two different instances
+                                                            // For toposort itself and for the next DFS traversal, which you shouldn't modify the toposort again
         visited[u] = true; // That vertex is now visited
         for (int i = 0; i < list.get(u).size(); i++) { // For all unvisited neighbours of u...
             if (!visited[list.get(u).get(i)]) { // Do traversal recursively and update parent
@@ -110,17 +120,18 @@ class AdjacencyList { // D/U graph DS
             toposort.add(u);
     }
 
-    public int solve () { // Kosaraju's Algorithm to create the "SCCs" of the graph
+    public int solve () { // Similar to Kosaraju's Algorithm to create the "SCCs" of the graph
         // DFS topological sort of G
         toposort(); // toposort will know be the array of the post-ordering proccesing of the vertices
+                    // hence reversed
 
-        // Initialize visited
+        // Initialize visited array
         visited = new boolean[numVertices];
         for (int i = 0; i < numVertices; i++)
             visited[i] = false;
 
         // Process vertices of toposort from right to left
-        int ans = 0;
+        int ans = 0; // This will be our final answer
         for (int i = numVertices-1; i >= 0; i--) {
             if (!visited[toposort.get(i)]) {
                 ans++;

@@ -61,54 +61,17 @@ public class MillionaireMadness2 {
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 // Check neighbouring stacks and then connect them
-                if (i == 0 && j == 0) { // corner top left, neighbours are (1,0) and (0,1) if exist
-                    if (r > 1)
-                        graph.connect(i*c+j,1*c+0);
-                    if (c > 1)
-                        graph.connect(i*c+j,0*c+1);
-                } else if (i == 0 && j == c-1) { // corner top right, neighbours are (0,c-2) and (1,c-1) if exist
-                    if (c > 1)
-                        graph.connect(i*c+j,0*c+(c-2));
-                    if (r > 1)
-                        graph.connect(i*c+j,1*c+(c-1));
-                } else if (i == r-1 && j == 0) { // corner bottom left, neighbours are (r-1,1) and (r-2,0) if exist
-                    if (c > 1)
-                        graph.connect(i*c+j,(r-1)*c+1);
-                    if (r > 1)
-                        graph.connect(i*c+j,(r-2)*c+0);
-                } else if (i == r-1 && j == c-1) { // corner bottom right, neighbours are (r-2,c-1) and (r-1,c-2) if exist
-                    if (r > 1)
-                        graph.connect(i*c+j,(r-2)*c+(c-1));
-                    if (c > 1)
-                        graph.connect(i*c+j,(r-1)*c+(c-2));
-                } else if (j == 0) { // non-corner left edge, neighbours are above, right, and below
-                    graph.connect(i*c+j,(i-1)*c+0); // must have a neighbour above
-                    graph.connect(i*c+j,(i+1)*c+0); // must have a neighbour below
-                    if (c > 1)
-                        graph.connect(i*c+j,i*c+1); // right
-                } else if (j == c-1) { // non-corner right edge, neighbours are above, left, and below
-                    graph.connect(i*c+j,(i-1)*c+(c-1)); // must have a neighbour above
-                    graph.connect(i*c+j,(i+1)*c+(c-1)); // must have a neighbour below
-                    if (c > 1)
-                        graph.connect(i*c+j,i*c+(c-2)); // left
-                } else if (i == 0) { // non-corner top edge, neighbours are left, right, and below
-                    graph.connect(i*c+j,0*c+(j-1)); // must have a neighbour left
-                    graph.connect(i*c+j,0*c+(j+1)); // must have a neighbour right
-                    if (r > 1)
-                        graph.connect(i*c+j,1*c+j); // below
-                } else if (i == r-1) { // non-corner bottom edge, neighbours are above, left, and right
-                    graph.connect(i*c+j,(r-1)*c+(j-1)); // must have a neighbour left
-                    graph.connect(i*c+j,(r-1)*c+(j+1)); // must have a neighbour right
-                    if (r > 1)
-                        graph.connect(i*c+j,(r-2)*c+j); // above
-                } else { // other than that, have 4 neighbours
-                    graph.connect(i*c+j,i*c+(j-1)); // left
-                    graph.connect(i*c+j,i*c+(j+1)); // right
-                    graph.connect(i*c+j,(i-1)*c+j); // above
-                    graph.connect(i*c+j,(i+1)*c+j); // below
-                }
+                if (j > 0)
+                    graph.connect(i*c+j,i*c+(j-1),Math.max(0,coins[i][j-1]-coins[i][j])); // left
+                if (j < c-1)
+                    graph.connect(i*c+j,i*c+(j+1),Math.max(0,coins[i][j+1]-coins[i][j])); // right
+                if (i > 0)
+                    graph.connect(i*c+j,(i-1)*c+j,Math.max(0,coins[i-1][j]-coins[i][j])); // above
+                if (i < r-1)
+                    graph.connect(i*c+j,(i+1)*c+j,Math.max(0,coins[i+1][j]-coins[i][j])); // below
             }
         }
+
         writer.println(graph.MST(0,r*c-1)); // simply call the function
         writer.flush();
     }
@@ -140,14 +103,7 @@ class AdjacencyList { // D/W graph DS
         pq = new PriorityQueue<Triple>(pc);
     }
 
-    public void connect (int a, int b) {
-        int cols = coins[0].length;
-        int r1 = a/cols, c1 = a % cols;
-        int r2 = b/cols, c2 = b % cols;
-        int w = Math.max(0,coins[r2][c2]-coins[r1][c1]); // the weight of the edge is the difference between the stack
-                                                         // since it is directed, we have to be aware of the negative value
-        list.get(a).add(new Pair(b,w));
-    }
+    public void connect (int a, int b, int w) { list.get(a).add(new Pair(b,w)); }
 
     // This will return the edges that create the MST
     // The format of each entry is <src, dest, weight>, just like the original Edge List

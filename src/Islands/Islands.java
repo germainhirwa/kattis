@@ -23,7 +23,7 @@ public class Islands {
         for (int i = 0; i < m; i++) {
             String row = sc.readLine();
             for (int j = 0; j < n; j++) {
-                int k = row.charAt(j);
+                int k = row.charAt(j); // I use the ASCII value for easy comparation
                 map[i][j] = (k == 67 ? -1 : (k == 76 ? 1 : 0)); // -1 if cloud, 1 if land, 0 if water
                 ufds.land[i*n+j] = (k == 76); // if there is land, initiate the land boolean to true for unionSet later
             }
@@ -33,64 +33,15 @@ public class Islands {
             for (int j = 0; j < n; j++) {
                 // Check for every point that is not water
                 if (map[i][j] != 0) {
-                    if (i == 0 && j == 0) { // corner top left, neighbours are (1,0) and (0,1) if exist
-                        if (m > 1 && map[1][0] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,0,n),map[1][0] == 1);
-                        if (n > 1 && map[0][1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,1,n),map[0][1] == 1);
-                    } else if (i == 0 && j == n-1) { // corner top right, neighbours are (0,n-2) and (1,n-1) if exist
-                        if (n > 1 && map[0][n-2] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,n-2,n),map[0][n-2] == 1);
-                        if (m > 1 && map[1][n-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,n-1,n),map[1][n-1] == 1);
-                    } else if (i == m-1 && j == 0) { // corner bottom left, neighbours are (m-1,1) and (m-2,0) if exist
-                        if (n > 1 && map[m-1][1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,1,n),map[m-1][1] == 1);
-                        if (m > 1 && map[m-2][0] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,0,n),map[m-2][0] == 1);
-                    } else if (i == m-1 && j == n-1) { // corner bottom right, neighbours are (m-2,n-1) and (m-1,n-2) if exist
-                        if (m > 1 && map[m-2][n-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,n-1,n),map[m-2][n-1] == 1);
-                        if (n > 1 && map[m-1][n-2] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,n-2,n),map[m-1][n-2] == 1);
-                    } else if (j == 0) { // left edge, neighbours are above, right, and below
-                        if (map[i-1][0] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,0,n),map[i-1][0] == 1);
-                        if (map[i+1][0] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,0,n),map[i+1][0] == 1);
-                        if (n > 1 && map[i][1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,1,n),map[i][1] == 1);
-                    } else if (j == n-1) { // right edge, neighbours are above, left, and below
-                        if (map[i-1][n-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,n-1,n),map[i-1][n-1] == 1);
-                        if (map[i+1][n-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,n-1,n),map[i+1][n-1] == 1);
-                        if (n > 1 && map[i][n-2] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,n-2,n),map[i][n-2] == 1);
-                    } else if (i == 0) { // top edge, neighbours are left, right, and below
-                        if (map[0][j-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,j-1,n),map[0][j-1] == 1);
-                        if (map[0][j+1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,j+1,n),map[0][j+1] == 1);
-                        if (m > 1 && map[1][j] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,j,n),map[1][j] == 1);
-                    } else if (i == m-1) { // bottom edge, neighbours are above, left, and right
-                        if (map[m-1][j-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,j-1,n),map[m-1][j-1] == 1);
-                        if (map[m-1][j+1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,j+1,n),map[m-1][j+1] == 1);
-                        if (m > 1 && map[m-2][j] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,j,n),map[m-2][j] == 1);
-                    } else { // other than that, have 4 neighbours
-                        if (map[i][j-1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j-1,n),map[i][j-1] == 1);
-                        if (map[i][j+1] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j+1,n),map[i][j+1] == 1);
-                        if (map[i-1][j] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,j,n),map[i-1][j] == 1);
-                        if (map[i+1][j] != 0)
-                            ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,j,n),map[i+1][j] == 1);
-                    }
+                    // The union set takes two integers and a boolean to check whether one of the unioned numbers is land
+                    if (j > 0 && map[i][j-1] != 0)
+                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j-1,n),map[i][j-1] == 1); // left
+                    if (j < n-1 && map[i][j+1] != 0)
+                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j+1,n),map[i][j+1] == 1); // right
+                    if (i > 0 && map[i-1][j] != 0)
+                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,j,n),map[i-1][j] == 1); // above
+                    if (i < m-1 && map[i+1][j] != 0)
+                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,j,n),map[i+1][j] == 1); // below
                 }
             }
         }
@@ -104,6 +55,8 @@ public class Islands {
                 // Third boolean : check if itself is not water (double-check)
                 if (ufds.p[i*n+j] == i*n+j && ufds.land[i*n+j] && map[i][j] != 0)
                     count++;
+
+                // Why second boolean check exists? Imagine a map with all clouds and waters but no land, the answer is 0
             }
         }
 
@@ -136,7 +89,7 @@ class UnionFind {
         } 
     }
 
-    public Boolean isSameSet(int i, int j) { return findSet(i) == findSet(j); }
+    public boolean isSameSet(int i, int j) { return findSet(i) == findSet(j); }
 
     public void unionSet(int i, int j, boolean hasLand) {
         if (!isSameSet(i, j)) {

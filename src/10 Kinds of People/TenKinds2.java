@@ -87,64 +87,14 @@ public class TenKinds2 {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 // Check for every point, if the neighbour is the same as them, union both
-                if (i == 0 && j == 0) { // corner top left, neighbours are (1,0) and (0,1) if exist
-                    if (m > 1 && map[1][0] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,0,n));
-                    if (n > 1 && map[0][1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,1,n));
-                } else if (i == 0 && j == n-1) { // corner top right, neighbours are (0,n-2) and (1,n-1) if exist
-                    if (n > 1 && map[0][n-2] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,n-2,n));
-                    if (m > 1 && map[1][n-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,n-1,n));
-                } else if (i == m-1 && j == 0) { // corner bottom left, neighbours are (m-1,1) and (m-2,0) if exist
-                    if (n > 1 && map[m-1][1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,1,n));
-                    if (m > 1 && map[m-2][0] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,0,n));
-                } else if (i == m-1 && j == n-1) { // corner bottom right, neighbours are (m-2,n-1) and (m-1,n-2) if exist
-                    if (m > 1 && map[m-2][n-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,n-1,n));
-                    if (n > 1 && map[m-1][n-2] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,n-2,n));
-                } else if (j == 0) { // left edge, neighbours are above, right, and below
-                    if (map[i-1][0] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,0,n));
-                    if (map[i+1][0] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,0,n));
-                    if (n > 1 && map[i][1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,1,n));
-                } else if (j == n-1) { // right edge, neighbours are above, left, and below
-                    if (map[i-1][n-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,n-1,n));
-                    if (map[i+1][n-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,n-1,n));
-                    if (n > 1 && map[i][n-2] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,n-2,n));
-                } else if (i == 0) { // top edge, neighbours are left, right, and below
-                    if (map[0][j-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,j-1,n));
-                    if (map[0][j+1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(0,j+1,n));
-                    if (m > 1 && map[1][j] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(1,j,n));
-                } else if (i == m-1) { // bottom edge, neighbours are above, left, and right
-                    if (map[m-1][j-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,j-1,n));
-                    if (map[m-1][j+1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-1,j+1,n));
-                    if (m > 1 && map[m-2][j] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(m-2,j,n));
-                } else { // other than that, have 4 neighbours
-                    if (map[i][j-1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j-1,n));
-                    if (map[i][j+1] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j+1,n));
-                    if (map[i-1][j] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,j,n));
-                    if (map[i+1][j] == map[i][j])
-                        ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,j,n));
-                }
+                if (j > 0 && map[i][j-1] == map[i][j])
+                    ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j-1,n));
+                if (j < n-1 && map[i][j+1] == map[i][j])
+                    ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i,j+1,n));
+                if (i > 0 && map[i-1][j] == map[i][j])
+                    ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i-1,j,n));
+                if (i < m-1 && map[i+1][j] == map[i][j])
+                    ufds.unionSet(coordToIndex(i,j,n),coordToIndex(i+1,j,n));
             }
         }
 

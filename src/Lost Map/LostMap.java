@@ -45,9 +45,11 @@ public class LostMap {
         Reader sc = new Reader();
         PrintWriter writer = new PrintWriter(System.out);
         
+        // Initialize an edge list
         int V = sc.nextInt();
         EdgeList el = new EdgeList(V);
 
+        // Input the edges along it's weight
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
                 int w = sc.nextInt();
@@ -56,7 +58,10 @@ public class LostMap {
             }
         }
 
+        // Use Kruskal's Algorithm to find the MST, this will return the edges that are inside the MST
         List<Triple> mst = el.MSTKruskal();
+
+        // Just print the edge pairs
         for (Triple e : mst)
             writer.println((e.first+1) + " " + (e.second+1));
         
@@ -77,18 +82,18 @@ class EdgeList {
         list.add(new Triple(Math.min(a,b),Math.max(a,b),w));
     }
 
-    public List<Triple> MSTKruskal () {
+    public List<Triple> MSTKruskal () { // Totally Kruskal's Algorithm
         UnionFind ufds = new UnionFind(numVertices);
         KruskalComparator kc = new KruskalComparator();
-        list.sort(kc);
+        list.sort(kc); // Basically sorting the edges inside the edge list
 
         List<Triple> mst = new ArrayList<Triple>();
         for (int i = 0; i < list.size(); i++) {
-            if (!ufds.isSameSet(list.get(i).first,list.get(i).second)) {
+            if (!ufds.isSameSet(list.get(i).first, list.get(i).second)) { // not in the same set, we can pick that edge and union the vertices
                 mst.add(list.get(i));
-                ufds.unionSet(list.get(i).first,list.get(i).second);
+                ufds.unionSet(list.get(i).first, list.get(i).second);
             }
-            if (ufds.numDisjointSets() == 1) { // all vertices inside MST
+            if (ufds.numDisjointSets() == 1) { // all vertices inside MST, terminate
                 break;
             }
         }
@@ -144,7 +149,7 @@ class UnionFind {
         } 
     }
 
-    public Boolean isSameSet(int i, int j) { return findSet(i) == findSet(j); }
+    public boolean isSameSet(int i, int j) { return findSet(i) == findSet(j); }
 
     public void unionSet(int i, int j) { 
         if (!isSameSet(i, j)) { 
