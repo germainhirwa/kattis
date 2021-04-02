@@ -20,10 +20,30 @@ public class Islands {
         // And an array for the map representation
         int[][] map = new int[m][n];
 
+        /*
+        My goal here is to use UFDS. I will try to connect (union) all the lands and possibly the clouds together if adjacent
+        In the end, my UFDS will have sets where each set's representative is either land, cloud or water.
+        If it's water, discard it.
+        If it's land, add 1 to the island count.
+        However, if it's cloud, the set may contain land, which we have to add 1 to the island count. If the set has full of C's, then we can assume they are all water and hence don't add.
+
+        I will use the hasLand boolean for unionSet to keep track whether the set contains land.
+        To do this, the UFDS must have another boolean array "land" to store whether it is land or not.
+
+        Example
+
+        CCWWW -> CCL's will be in the same set. Since the set contains an L, this is counted as one island.
+        LWWWC
+        WWWCC -> The three C's will be in the same set. No L's here, so it's all water. Not an island.
+        WWWWW
+        LCCLL -> LCCLL will be in the same set. Since it contains an L, this is counted as one more island.
+        */
+
         for (int i = 0; i < m; i++) {
             String row = sc.readLine();
             for (int j = 0; j < n; j++) {
                 int k = row.charAt(j); // I use the ASCII value for easy comparation
+                // ASCII of C is 67, L is 76
                 map[i][j] = (k == 67 ? -1 : (k == 76 ? 1 : 0)); // -1 if cloud, 1 if land, 0 if water
                 ufds.land[i*n+j] = (k == 76); // if there is land, initiate the land boolean to true for unionSet later
             }
@@ -49,14 +69,14 @@ public class Islands {
         int count = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                // Check all representative whose set has land and is not water
+                // Check all representative whose set has land and is not water (it may be cloud)
                 // First boolean : check if it is a representative/parent
                 // Second boolean : check if the set has land
                 // Third boolean : check if itself is not water (double-check)
                 if (ufds.p[i*n+j] == i*n+j && ufds.land[i*n+j] && map[i][j] != 0)
                     count++;
 
-                // Why second boolean check exists? Imagine a map with all clouds and waters but no land, the answer is 0
+                // Again, why second boolean check exists? Imagine a map with all clouds and waters but no land, the answer is 0
             }
         }
 
@@ -116,6 +136,6 @@ WLWC
 LWLC
 CCCC
 
-This is because when I go through (0,3) no land neighbour but the representative is the next C.
-I must do or for both x and y in unionSet
+This is because when I go through (0,3) there is no neighbouring land but the representative is the C next to it.
+I must do the or operation for both x and y in the unionSet method
 */
