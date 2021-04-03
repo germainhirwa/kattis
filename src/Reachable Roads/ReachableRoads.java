@@ -102,12 +102,4 @@ class AdjacencyList {
 
         return ans;
     }
-
-    public void printList () {
-        System.out.println("ADJACENCY LIST");
-        for (int i = 0; i < numVertices; i++) {
-            System.out.println(i+": "+list.get(i));
-        }
-        System.out.println();
-    }
 }
