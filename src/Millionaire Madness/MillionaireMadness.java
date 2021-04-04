@@ -51,10 +51,9 @@ public class MillionaireMadness {
         int[][] coins = new int[r][c]; // 2D array to store the height of the coins, we will determine the graph weight from here
 
         // Fill the 2D array
-        for (int i = 0; i < r; i++) {
+        for (int i = 0; i < r; i++)
             for (int j = 0; j < c; j++)
                 coins[i][j] = sc.nextInt();
-        }
 
         // The weight of the edge will be the difference between the stack
         // since it is directed, we have to be aware of the negative value

@@ -103,10 +103,7 @@ class UnionFind {
 
     public int findSet(int i) { 
         if (p[i] == i) return i;
-        else {
-            p[i] = findSet(p[i]);
-            return p[i]; 
-        } 
+        else return p[i] = findSet(p[i]);
     }
 
     public boolean isSameSet(int i, int j) { return findSet(i) == findSet(j); }

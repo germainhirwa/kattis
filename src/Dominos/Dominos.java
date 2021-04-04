@@ -111,9 +111,8 @@ class AdjacencyList { // D/U graph DS
                                                             // For toposort itself and for the next DFS traversal, which you shouldn't modify the toposort again
         visited[u] = true; // That vertex is now visited
         for (int i = 0; i < list.get(u).size(); i++) { // For all unvisited neighbours of u...
-            if (!visited[list.get(u).get(i)]) { // Do traversal recursively and update parent
+            if (!visited[list.get(u).get(i)]) // Do traversal recursively and update parent
                 DFSRecursive(list.get(u).get(i),forToposort);
-            }
         }
 
         if (forToposort)
