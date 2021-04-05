@@ -28,23 +28,6 @@ public class ShortestPath {
             return ret;
         }
 
-        public String readLine() throws IOException {
-            byte[] buf = new byte[64]; // line length
-            int cnt = 0, c;
-            while ((c = read()) != -1) {
-                if (c == '\n') {
-                    if (cnt != 0) {
-                        break;
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                buf[cnt++] = (byte)c;
-            }
-            return new String(buf, 0, cnt);
-        }
-
         private void fillBuffer() throws IOException {
             bytesRead = din.read(buffer, bufferPointer = 0,
                                  BUFFER_SIZE);
