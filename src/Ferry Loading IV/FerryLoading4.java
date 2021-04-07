@@ -59,9 +59,9 @@ public class FerryLoading4 {
             }
 
             if (leftVisit > rightVisit) {
-                System.out.println(2*leftVisit-1);
+                writer.println(2*leftVisit-1);
             } else {
-                System.out.println(2*rightVisit);
+                writer.println(2*rightVisit);
             }
         }
 

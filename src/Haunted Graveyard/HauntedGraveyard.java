@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class ShortestPath {
+public class HauntedGraveyard {
     static class Reader {
         final private int BUFFER_SIZE = 1 << 16;
         private DataInputStream din;
@@ -54,30 +54,61 @@ public class ShortestPath {
         long INF = 1000000000000L;
 
         while (true) {
-            int n = sc.nextInt(), m = sc.nextInt(), q = sc.nextInt(), s = sc.nextInt();
-            if (n == 0 && m == 0 && q == 0 && s == 0) {
+            int n = sc.nextInt(), m = sc.nextInt();
+            if (n == 0 && m == 0) {
                 writer.flush();
                 return;
             }
 
-            Graph graph = new Graph(n);
-            while (m-- > 0)
-                graph.connect(sc.nextInt(),sc.nextInt(),sc.nextInt());
-            
-            graph.doSSSP(s);
+            Graph graph = new Graph(n*m);
 
-            while (q-- > 0) {
-                int t = sc.nextInt();
-                long sp = graph.D[t];
-                if (sp == INF)
-                    writer.println("Impossible");
-                else if (graph.neg[t])
-                    writer.println("-Infinity");
-                else
-                    writer.println(sp);
+            boolean[][] graveyard = new boolean[n][m], wormhole = new boolean[n][m];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++) {
+                    graveyard[i][j] = false;
+                    wormhole[i][j] = false;
+                }
+
+            int g = sc.nextInt();
+            while (g-- > 0)
+                graveyard[sc.nextInt()][sc.nextInt()] = true;
+
+            int h = sc.nextInt();
+            while (h-- > 0) {
+                int x = sc.nextInt(), y = sc.nextInt();
+                graph.connect(x+y*n,sc.nextInt()+sc.nextInt()*n,sc.nextInt());
+                wormhole[x][y] = true;
             }
 
-            writer.println();
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    if (!wormhole[j][i] && !graveyard[j][i] && (i != m-1 || j != n-1)) { // not the exit
+                        if (j > 0 && !graveyard[j-1][i])
+                            graph.connect(i*n+j,i*n+(j-1),1); // left
+                        if (j < n-1 && !graveyard[j+1][i])
+                            graph.connect(i*n+j,i*n+(j+1),1); // right
+                        if (i > 0 && !graveyard[j][i-1])
+                            graph.connect(i*n+j,(i-1)*n+j,1); // up
+                        if (i < m-1 && !graveyard[j][i+1])
+                            graph.connect(i*n+j,(i+1)*n+j,1); // down
+                    }
+            
+            graph.doSSSP(0);
+
+            long sp = graph.D[n*m-1];
+            boolean never = false;
+            for (int i = 0; i < n*m; i++)
+                if (graph.D[i] == -INF) {
+                    never = true;
+                    break;
+                }
+
+            if (!never && sp == INF)
+                writer.println("Impossible");
+            else if (never)
+                writer.println("Never");
+            else
+                writer.println(sp);
         }
     }
 }
