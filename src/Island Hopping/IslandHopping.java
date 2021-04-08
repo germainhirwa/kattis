@@ -1,4 +1,4 @@
-// Uses AM, don't use the Reader class since it can't handle doubles well
+// Uses AM, don't use the Reader class since it can't handle doubles well in this case
 
 import java.io.*;
 import java.util.*;

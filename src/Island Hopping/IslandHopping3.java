@@ -1,10 +1,9 @@
-// Uses AL, don't use the Reader class since it can't handle doubles well
+// Uses AL, also slightly slower than using AM, don't use the Reader class since it can't handle doubles well in this case
 
 import java.io.*;
 import java.util.*;
 
 public class IslandHopping3 {
-
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);
