@@ -43,7 +43,6 @@ public class LostMap {
     
     public static void main(String[] args) throws IOException {
         Reader sc = new Reader();
-        PrintWriter writer = new PrintWriter(System.out);
         
         // Initialize an edge list
         int V = sc.nextInt();
@@ -59,13 +58,7 @@ public class LostMap {
         }
 
         // Use Kruskal's Algorithm to find the MST, this will return the edges that are inside the MST
-        List<Triple> mst = el.MSTKruskal();
-
-        // Just print the edge pairs
-        for (Triple e : mst)
-            writer.println((e.first+1) + " " + (e.second+1));
-        
-        writer.flush();
+        el.MSTKruskal();
     }
 }
 
@@ -82,15 +75,17 @@ class EdgeList {
         list.add(new Triple(Math.min(a,b),Math.max(a,b),w));
     }
 
-    public List<Triple> MSTKruskal () { // Totally Kruskal's Algorithm
+    public void MSTKruskal () { // Totally Kruskal's Algorithm
+        PrintWriter writer = new PrintWriter(System.out);
         UnionFind ufds = new UnionFind(numVertices);
         KruskalComparator kc = new KruskalComparator();
         list.sort(kc); // Basically sorting the edges inside the edge list
 
-        List<Triple> mst = new ArrayList<Triple>();
         for (int i = 0; i < list.size(); i++) {
             if (!ufds.isSameSet(list.get(i).first, list.get(i).second)) { // not in the same set, we can pick that edge and union the vertices
-                mst.add(list.get(i));
+                writer.print(list.get(i).first+1);
+                writer.print(" ");
+                writer.println(list.get(i).second+1);
                 ufds.unionSet(list.get(i).first, list.get(i).second);
             }
             if (ufds.numDisjointSets() == 1) { // all vertices inside MST, terminate
@@ -98,7 +93,7 @@ class EdgeList {
             }
         }
 
-        return mst;
+        writer.flush();
     }
 }
 
@@ -157,9 +152,9 @@ class UnionFind {
             int x = findSet(i), y = findSet(j);
             // rank is used to keep the tree short
             if (rank[x] > rank[y]) 
-            	p[y] = x;
+                p[y] = x;
             else { 
-            	p[x] = y;
+                p[x] = y;
                 if (rank[x] == rank[y]) 
                     rank[y] = rank[y]+1; 
             } 
