@@ -44,7 +44,7 @@ public class LostMap {
     public static void main(String[] args) throws IOException {
         Reader sc = new Reader();
         
-        // Initialize an edge list
+        // Initialize an edge list with V vertices
         int V = sc.nextInt();
         EdgeList el = new EdgeList(V);
 
@@ -52,7 +52,7 @@ public class LostMap {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
                 int w = sc.nextInt();
-                if (j > i)
+                if (j > i) // only process the inputs above the diagonal
                     el.connect(i,j,w);
             }
         }
@@ -71,36 +71,35 @@ class EdgeList {
         list = new ArrayList<Triple>();
     }
 
-    public void connect (int a, int b, int w) {
+    public void connect (int a, int b, int w) { // we will store the edge triple such that the source's number is smaller than the destination's
         list.add(new Triple(Math.min(a,b),Math.max(a,b),w));
     }
 
-    public void MSTKruskal () { // Totally Kruskal's Algorithm
+    public void MSTKruskal () { // Just Kruskal's Algorithm
         PrintWriter writer = new PrintWriter(System.out);
-        UnionFind ufds = new UnionFind(numVertices);
+        UnionFind ufds = new UnionFind(numVertices); // use an UFDS
         KruskalComparator kc = new KruskalComparator();
-        list.sort(kc); // Basically sorting the edges inside the edge list
+        list.sort(kc); // Basically sorting the edges inside the edge list with KruskalComparator
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) { // process every edge
             if (!ufds.isSameSet(list.get(i).first, list.get(i).second)) { // not in the same set, we can pick that edge and union the vertices
-                writer.print(list.get(i).first+1);
-                writer.print(" ");
-                writer.println(list.get(i).second+1);
-                ufds.unionSet(list.get(i).first, list.get(i).second);
+                writer.print(list.get(i).first+1);      // one side of the edge
+                writer.print(" ");                      // space
+                writer.println(list.get(i).second+1);   // other side of the edge
+                ufds.unionSet(list.get(i).first, list.get(i).second);   // then union both vertices
             }
             if (ufds.numDisjointSets() == 1) { // all vertices inside MST, terminate
-                break;
+                writer.flush();
+                return;
             }
         }
-
-        writer.flush();
     }
 }
 
 class Triple {
-    public int first;
-    public int second;
-    public int third;
+    public int first; // representing source
+    public int second; // representing destination
+    public int third; // representing weight
 
     public Triple (int a, int b, int w) {
         first = a;
@@ -109,7 +108,7 @@ class Triple {
     }
 }
 
-class KruskalComparator implements Comparator<Triple> {
+class KruskalComparator implements Comparator<Triple> { // basically sort by (src, dest, weight) in that order
     public int compare (Triple t1, Triple t2) {
         if (t1.third == t2.third) {
             if (t1.first == t2.first)
@@ -121,7 +120,7 @@ class KruskalComparator implements Comparator<Triple> {
     }
 }
 
-class UnionFind {
+class UnionFind { // the regular UnionFind code
     public int[] p;
     public int[] rank;
     public int numSets;
