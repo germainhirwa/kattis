@@ -92,7 +92,7 @@ class AdjacencyList { // D/U graph DS
 
     public void connect (int a, int b) { list.get(a).add(b); } // simply add b to list.get(a)
 
-    public void toposort () { // DFS toposort, the toposort attribute will now be the reversed order of the result
+    public void topoSort () { // DFS toposort, the toposort attribute will now be the reversed order of the result
         // Initialization
         visited = new boolean[numVertices];
         for (int i = 0; i < numVertices; i++)
@@ -121,7 +121,7 @@ class AdjacencyList { // D/U graph DS
 
     public int solve () { // Similar to Kosaraju's Algorithm to create the "SCCs" of the graph
         // DFS topological sort of G
-        toposort(); // toposort will know be the array of the post-ordering proccesing of the vertices
+        topoSort(); // toposort will know be the array of the post-ordering proccesing of the vertices
                     // hence reversed
 
         // Initialize visited array
