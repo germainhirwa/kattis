@@ -6,7 +6,7 @@ swats = []
 
 for line in sys.stdin:
     if not first_line:
-        a,b,c = list(map(int,line.split(" ")))
+        a,b,c = list(map(int,line.split()))
         first_line = True
     else:
         grid.append(list(line.strip()))

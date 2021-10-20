@@ -1,7 +1,7 @@
 import sys
 
 for line in sys.stdin:
-    cmd = line.strip().split(" ")
+    cmd = line.strip().split()
 
     if cmd[0] == "E":
         prev, prev_idx = cmd[1][0], 0

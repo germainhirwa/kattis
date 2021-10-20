@@ -10,7 +10,7 @@ for line in sys.stdin:
         for i in range(int(line)-1):
             q.append(q.pop(0))
     else:
-        s = line.strip().split(" ")
+        s = line.strip().split()
         if len(s) == 2:
             t += int(s[0])
             if t >= 210:

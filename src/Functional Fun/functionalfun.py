@@ -7,7 +7,7 @@ for line in sys.stdin:
         d = False
     elif cd:
         cd = False
-        cdm = line.strip().split(" ")[1:]
+        cdm = line.strip().split()[1:]
     elif n:
         n = False
         nn = int(line)

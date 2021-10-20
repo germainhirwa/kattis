@@ -7,7 +7,7 @@ def main():
         if not first_line:
             first_line = True
         else:
-            lst = line.split(" ")
+            lst = line.split()
             for i in lst:
                 k *= 2
                 k -= int(i)

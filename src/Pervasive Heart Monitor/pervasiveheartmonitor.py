@@ -1,7 +1,7 @@
 import sys
 
 for line in sys.stdin:
-    s = line.split(" ")
+    s = line.split()
     name = []
     hr = []
     for e in s:

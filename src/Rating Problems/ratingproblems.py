@@ -4,7 +4,7 @@ s = 0
 
 for line in sys.stdin:
     try:
-        n,k = list(map(int,line.split(" ")))
+        n,k = list(map(int,line.split()))
     except:
         s += int(line)
 

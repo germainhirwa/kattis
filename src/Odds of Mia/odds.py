@@ -22,7 +22,7 @@ def gcd(a, b):
     return a
 
 for line in sys.stdin:
-    a, b, c, d = line.strip().split(" ")
+    a, b, c, d = line.strip().split()
     if a + b + c + d == "0000":
         sys.exit(0)
     

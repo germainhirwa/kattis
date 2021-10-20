@@ -9,7 +9,7 @@ for line in sys.stdin:
             sys.exit(0)
         r = ["1"]
     else:
-        l = list(map(int,line.split(" ")))
+        l = list(map(int,line.split()))
         r += ["0"]*len(l)
         for i in range(len(l)):
             r[l[i]+1] = str(i+2)

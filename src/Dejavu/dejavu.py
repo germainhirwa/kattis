@@ -11,7 +11,7 @@ for line in sys.stdin:
         first_line = True
         n = int(line)
     else:
-        a,b = list(map(int,line.split(" ")))
+        a,b = list(map(int,line.split()))
         x[a] = x.get(a,0)+1
         y[b] = y.get(b,0)+1
         xi.append(a)

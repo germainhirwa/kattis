@@ -4,7 +4,7 @@ import sys
 
 for line in sys.stdin:
     try:
-        name, like, date = line.strip().split(" ")
+        name, like, date = line.strip().split()
         if date not in birthdays:
             birthdays[date] = (like,name)
         elif int(birthdays[date][0]) < int(like):

@@ -1,4 +1,4 @@
-v, u, i, ut = input().strip().split(" ")
+v, u, i, ut = input().strip().split()
 v = int(v)
 
 d = {}

@@ -25,7 +25,7 @@ for line in sys.stdin:
     try:
         x = int(line)
     except:
-        tones = list(line.strip().split(" "))
+        tones = list(line.strip().split())
         possible = [x]*12
         for t in tones:
             for k in [0,2,4,5,7,9,11]:

@@ -13,7 +13,7 @@ for line in sys.stdin:
         for w in line[3:].split(" "):
             k[w] = l
     else:
-        s = line.split(" ")
+        s = line.split()
         ar = s.index("->")
         for a in s[:ar]:
             if a not in k:

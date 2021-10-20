@@ -8,7 +8,7 @@ import sys
 
 for line in sys.stdin:
     try:
-        r,s = line.strip().split(" ")
+        r,s = line.strip().split()
         r = int(r)
         s = s[::-1]
 

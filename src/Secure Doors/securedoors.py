@@ -4,7 +4,7 @@ entry = {}
 t = int(input())
 
 for line in sys.stdin:
-    c, n = line.strip().split(" ")
+    c, n = line.strip().split()
     if c == 'entry':
         if not entry.get(n, False):
             print(f'{n} entered')

@@ -27,5 +27,5 @@ def check(s):
 
 n = int(input())
 for _ in range(n):
-    tc, s = input().strip().split(" ")
+    tc, s = input().strip().split()
     print(f"{tc} {check(s)}")

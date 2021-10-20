@@ -3,7 +3,7 @@ for _ in range(n):
     k = int(input())
     d = {}
     for _ in range(k):
-        a, c = input().strip().split(" ")
+        a, c = input().strip().split()
         d[c] = d.get(c, []) + [a]
     ans = 1
     for t in d:

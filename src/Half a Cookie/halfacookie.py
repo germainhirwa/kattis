@@ -1,7 +1,7 @@
 import sys, math
 
 for line in sys.stdin:
-    r,x,y = list(map(float,line.split(" ")))
+    r,x,y = list(map(float,line.split()))
     d = x**2 + y**2
     if d > r**2:
         print("miss")

@@ -1,5 +1,5 @@
 n = int(input())
-notes = input().strip().split(" ")
+notes = input().strip().split()
 n_dash = list(map(lambda x: 2 if len(x) == 1 else int(x[1]) + 1, notes))
 
 lines = ["G", "F", "E", "D", "C", "B", "A"]

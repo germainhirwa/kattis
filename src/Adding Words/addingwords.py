@@ -3,7 +3,7 @@ vars = {}
 rev_vars = {}
 
 for line in sys.stdin:
-    k = line.strip().split(" ")
+    k = line.strip().split()
     if k[0] == "def":
         if k[1] not in vars:
             vars[k[1]] = int(k[2])

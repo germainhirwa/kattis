@@ -14,6 +14,6 @@ def moves(m,n):
     return r
 
 for line in sys.stdin:
-    m,n = list(map(int,line.split(" ")))
+    m,n = list(map(int,line.split()))
     if m != 0 and n != 0:
         print(moves(m,n))

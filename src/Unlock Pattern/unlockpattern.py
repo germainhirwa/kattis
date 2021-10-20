@@ -4,7 +4,7 @@ coord = {}
 r = 0
 
 for line in sys.stdin:
-    lst = list(map(int,line.split(" ")))
+    lst = list(map(int,line.split()))
     for i in range(len(lst)):
         coord[lst[i]]=(r,i)
     r += 1

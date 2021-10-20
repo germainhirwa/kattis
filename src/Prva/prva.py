@@ -6,7 +6,7 @@ valid = []
 
 for line in sys.stdin:
     if fl:
-        r,c = list(map(int,line.split(" ")))
+        r,c = list(map(int,line.split()))
         fl = False
     else:
         cw.append(list(line.strip()))

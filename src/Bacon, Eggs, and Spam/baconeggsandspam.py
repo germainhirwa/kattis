@@ -12,6 +12,6 @@ for line in sys.stdin:
             print()
         d.clear()
     except:
-        q = line.strip().split(" ")
+        q = line.strip().split()
         for f in q[1:]:
             d[f] = d.get(f,[])+[q[0]]

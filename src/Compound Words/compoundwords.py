@@ -3,7 +3,7 @@ import sys
 words_full, results = [], set()
 
 for line in sys.stdin:
-    words = line.strip().split(" ")
+    words = line.strip().split()
     for w in words:
         words_full.append(w)
         

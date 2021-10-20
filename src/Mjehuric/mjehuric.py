@@ -1,7 +1,7 @@
 import sys
 
 for line in sys.stdin:
-    lst = line.strip().split(" ")
+    lst = line.strip().split()
     for i in range(len(lst)):
         for j in range(len(lst)-1):
             if lst[j] > lst[j+1]:

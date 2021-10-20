@@ -3,7 +3,7 @@ import sys
 targets = []
 
 for line in sys.stdin:
-    s = line.split(" ")
+    s = line.split()
     if len(s) > 3:
         targets.append(list(map(int,s[1:])))
     elif len(s) == 2:

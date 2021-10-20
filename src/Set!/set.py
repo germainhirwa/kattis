@@ -1,7 +1,7 @@
 s = []
 
 for _ in range(4):
-    s.extend(input().strip().split(" "))
+    s.extend(input().strip().split())
 
 def nd(lst, i):
     return len(set(map(lambda x: x[i], lst)))

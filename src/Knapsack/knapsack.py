@@ -18,9 +18,9 @@ def knapsack(capacity, vals, weights):
 capacity, n, vals, weights = 0, 0, [], []
 for line in sys.stdin:
     if n == 0:
-        capacity, n = list(map(int, line.split(" ")))
+        capacity, n = list(map(int, line.split()))
     else:
-        v, w = list(map(int, line.split(" ")))
+        v, w = list(map(int, line.split()))
         vals.append(v)
         weights.append(w)
         n -= 1

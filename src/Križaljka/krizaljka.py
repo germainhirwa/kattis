@@ -1,4 +1,4 @@
-a,b = input().strip().split(" ")
+a,b = input().strip().split()
 arr = []
 for _ in range(len(b)):
     arr.append(['.']*len(a))

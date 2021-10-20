@@ -3,9 +3,9 @@ import sys
 d = {}
 for line in sys.stdin:
     try:
-        n,m = list(map(int,line.split(" ")))
+        n,m = list(map(int,line.split()))
     except:
-        things = line.strip().split(" ")
+        things = line.strip().split()
         for t in things:
             d[t] = d.get(t,0)+1
     

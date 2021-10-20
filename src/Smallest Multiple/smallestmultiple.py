@@ -9,7 +9,7 @@ def lcm(a,b):
 import sys
 
 for line in sys.stdin:
-    nums = list(map(int,line.split(" ")))
+    nums = list(map(int,line.split()))
     x = 1
     for n in nums:
         x = lcm(x,n)

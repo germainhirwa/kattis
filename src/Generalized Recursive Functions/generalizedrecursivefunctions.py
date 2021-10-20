@@ -6,7 +6,7 @@ for line in sys.stdin:
     if not first_input:
         first_input = True
     elif not first_line:
-        rec = line.split(" ")
+        rec = line.split()
         dp = []
         zeroes = [0]*100
         for _ in range(100):
@@ -26,7 +26,7 @@ for line in sys.stdin:
                 dp[i][j] = ans
         first_line = True
     else: # second line
-        queries = line.split(" ")
+        queries = line.split()
         for i in range(len(queries)//2):
             print(f(int(queries[2*i]),int(queries[2*i+1])))
         first_line = False

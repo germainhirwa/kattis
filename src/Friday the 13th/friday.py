@@ -10,7 +10,7 @@ for line in sys.stdin:
             dm = False
         else:
             w, fri = 6, 0
-            days = list(map(int, line.split(" ")))
+            days = list(map(int, line.split()))
             print(days)
             for d in days:
                 if (w+13) % 7 == 5:

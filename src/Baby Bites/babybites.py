@@ -6,7 +6,7 @@ for line in sys.stdin:
         fl = False
     else:
         fishy = False
-        words = line.strip().split(" ")
+        words = line.strip().split()
         for i in range(len(words)):
             if words[i] != "mumble" and int(words[i]) != i+1:
                 fishy = True

@@ -7,7 +7,7 @@ for line in sys.stdin:
         first_line = True
         cups = []
     else:
-        line = line.strip().split(" ")
+        line = line.strip().split()
         try:
             line[0] = int(line[0])
         except:

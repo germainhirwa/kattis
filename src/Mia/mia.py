@@ -1,7 +1,7 @@
 import sys
 
 for line in sys.stdin:
-    a, b, c, d = list(map(int, line.split(" ")))
+    a, b, c, d = list(map(int, line.split()))
     if a + b + c + d == 0:
         sys.exit(0)
     

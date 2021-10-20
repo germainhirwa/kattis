@@ -63,6 +63,6 @@ def horoscope(d,m):
             return 'Capricorn'
 
 for line in sys.stdin:
-    dm = line.strip().split(" ")
+    dm = line.strip().split()
     if len(dm) == 2:
         print(horoscope(int(dm[0]),dm[1]))

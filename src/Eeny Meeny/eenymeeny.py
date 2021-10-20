@@ -6,7 +6,7 @@ a, b = [], []
 for line in sys.stdin:
     if fl:
         fl = False
-        w = len(line.split(" "))
+        w = len(line.split())
     elif sl:
         sl = False
         names = []
