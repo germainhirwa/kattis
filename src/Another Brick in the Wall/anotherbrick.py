@@ -1,5 +1,5 @@
-h, w, n = list(map(int, input().split(" ")))
-x = list(map(int, input().split(" ")))
+h, w, n = list(map(int, input().split()))
+x = list(map(int, input().split()))
 
 can = True
 c, r = 0, 1

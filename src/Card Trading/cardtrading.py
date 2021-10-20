@@ -1,12 +1,12 @@
-n,t,k = list(map(int,input().split(" ")))
-cards = list(filter(lambda x: x.isnumeric(), input().split(" ")))
+n,t,k = list(map(int,input().split()))
+cards = list(filter(lambda x: x.isnumeric(), input().split()))
 card_dict = {}
 
 for c in cards:
     card_dict[int(c)] = card_dict.get(int(c),0)+1
 
 for p in range(1,t+1):
-    b,s = list(map(int,input().split(" ")))
+    b,s = list(map(int,input().split()))
     card_dict[int(p)] = [(2-card_dict.get(int(p),0))*b,card_dict.get(int(p),0)*s]
 
 card_dict = list(card_dict.items())

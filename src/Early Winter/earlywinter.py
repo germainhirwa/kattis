@@ -1,5 +1,5 @@
-n, dm = list(map(int, input().split(" ")))
-d = list(map(int, input().split(" ")))
+n, dm = list(map(int, input().split()))
+d = list(map(int, input().split()))
 
 def do():
     for i in range(n):

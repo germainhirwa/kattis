@@ -62,7 +62,7 @@ def merge_down(mat):
 # main function
 matrix = []
 for _ in range(4):
-    matrix.append(list(map(int,input().split(" "))))
+    matrix.append(list(map(int,input().split())))
 n = int(input())
 
 if n == 0:

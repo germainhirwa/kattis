@@ -1,5 +1,5 @@
 n = int(input())
-t = list(map(int, input().split(" ")))
+t = list(map(int, input().split()))
 
 minmax_t = max(t[0], t[2])
 minmax_idx = 0

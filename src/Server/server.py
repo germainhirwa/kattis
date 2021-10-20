@@ -1,5 +1,5 @@
-n,t = list(map(int,input().split(" ")))
-s = list(map(int,input().split(" ")))
+n,t = list(map(int,input().split()))
+s = list(map(int,input().split()))
 
 c = 0
 while t >= 0 and c < n:

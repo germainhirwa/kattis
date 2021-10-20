@@ -1,10 +1,10 @@
-n, b, h, w = list(map(int, input().split(" ")))
+n, b, h, w = list(map(int, input().split()))
 found = False
 min_cost = b
 
 for _ in range(h):
     p = int(input())
-    a = list(map(int, input().split(" ")))
+    a = list(map(int, input().split()))
     for beds in a:
         if beds >= n and n*p <= b:
             found = True

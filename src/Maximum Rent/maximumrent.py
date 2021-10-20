@@ -1,8 +1,8 @@
 def f(x,y,a,b):
     return a*x+b*y
 
-a,b = list(map(int,input().split(" ")))
-m,s = list(map(int,input().split(" ")))
+a,b = list(map(int,input().split()))
+m,s = list(map(int,input().split()))
 x,y = s-m,2*m-s
 
 if s <= m+1:

@@ -1,4 +1,4 @@
-p, t = list(map(int, input().split(" ")))
+p, t = list(map(int, input().split()))
 ans = 0
 
 for _ in range(p):

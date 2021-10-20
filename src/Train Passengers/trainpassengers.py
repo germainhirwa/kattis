@@ -1,8 +1,8 @@
-c,n = list(map(int,input().split(" ")))
+c,n = list(map(int,input().split()))
 inside = 0
 result = True
 for i in range(n):
-    l,e,wait = list(map(int,input().split(" ")))
+    l,e,wait = list(map(int,input().split()))
     if inside < l:
         result = False
     else:

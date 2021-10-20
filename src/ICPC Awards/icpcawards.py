@@ -1,7 +1,7 @@
 n = int(input())
 winners = []
 for _ in range(n):
-    u,t = input().split(" ")
+    u,t = input().split()
     flag = True
     for i in range(len(winners)):
         if winners[i][0] == u:

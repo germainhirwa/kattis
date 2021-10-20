@@ -1,7 +1,7 @@
 n = int(input())
 runners = {} # Dictionary of runners in the form of 'runner : [leg1, leg2]'
 for _ in range(n):
-    names,leg1,leg2 = input().split(" ")
+    names,leg1,leg2 = input().split()
     runners[names]=[float(leg1),float(leg2)]
 
 min_time = 10000000

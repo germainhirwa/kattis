@@ -1,7 +1,7 @@
-kunas = list(map(int,input().split(" ")))
-a1, a2 = list(map(int,input().split(" ")))
-b1, b2 = list(map(int,input().split(" ")))
-c1, c2 = list(map(int,input().split(" ")))
+kunas = list(map(int,input().split()))
+a1, a2 = list(map(int,input().split()))
+b1, b2 = list(map(int,input().split()))
+c1, c2 = list(map(int,input().split()))
 
 p = 0
 

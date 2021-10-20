@@ -11,7 +11,7 @@ def choose(n, m):
     return int(result)
 
 for _ in range(n):
-    r, s, x, y, w = list(map(int, input().split(" ")))
+    r, s, x, y, w = list(map(int, input().split()))
     p = 0
     for i in range(x, y + 1):
         p += choose(y, i) * ((s-r+1)/s)**(i) * (1-(s-r+1)/s)**(y-i)

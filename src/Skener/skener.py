@@ -1,4 +1,4 @@
-r, c, zr, zc = map(int,input().split(" "))
+r, c, zr, zc = map(int,input().split())
 for _ in range(r):
     row = input()
     zrow = ""

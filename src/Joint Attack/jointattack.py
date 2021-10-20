@@ -1,5 +1,5 @@
 n = int(input())
-x = list(map(int, input().split(" ")))
+x = list(map(int, input().split()))
 
 nom, denom = x[-1], 1
 for i in x[-2::-1]:

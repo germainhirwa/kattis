@@ -1,8 +1,8 @@
 n = int(input())
 for i in range(n):
     k = int(input())
-    a = list(map(int, input().split(" ")))
-    b = list(map(int, input().split(" ")))
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
 
     msp = 0
     a.sort()

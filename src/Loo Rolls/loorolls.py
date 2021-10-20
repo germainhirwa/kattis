@@ -1,4 +1,4 @@
-l,n = list(map(int,input().split(" ")))
+l,n = list(map(int,input().split()))
 k = 1
 while l % n:
     k += 1

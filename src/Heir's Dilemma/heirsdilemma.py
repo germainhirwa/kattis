@@ -15,7 +15,7 @@ def distinct(n):
         d[v] = d.get(v,0)+1
     return len(s) == len(d)
 
-a,b = list(map(int,input().split(" ")))
+a,b = list(map(int,input().split()))
 c = 0
 for i in range(a,b+1):
     if distinct(i):

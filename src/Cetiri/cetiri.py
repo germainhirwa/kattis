@@ -1,4 +1,4 @@
-a,b,c = list(map(int,input().split(" ")))
+a,b,c = list(map(int,input().split()))
 d = sorted([a,b,c])
 aa,bb,cc = d
 

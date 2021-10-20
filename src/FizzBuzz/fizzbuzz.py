@@ -1,4 +1,4 @@
-fizz,buzz,end = map(int,input().split(" "))
+fizz,buzz,end = map(int,input().split())
 for i in range(1,end+1):
     if i % fizz == 0 and i % buzz == 0:
         print("FizzBuzz")
