@@ -105,9 +105,7 @@ public class GetShorty {
 
             AdjacencyList al = new AdjacencyList(n, false);
             while(m-- > 0) {
-                int u = sc.nextInt(), v = sc.nextInt();
-                double w = Math.log(sc.nextDouble());
-                al.connect(u, v, -w);
+                al.connect(sc.nextInt(), sc.nextInt(), -Math.log(sc.nextDouble()));
             }
 
             writer.printf("%.4f\n", Math.exp(-al.SSSPDijkstra(0, n - 1)));
