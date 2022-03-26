@@ -1,5 +1,3 @@
-// Using Reader class
-
 import java.io.*;
 import java.util.*;
 
@@ -97,8 +95,6 @@ class AdjacencyList {
 
     public void doDijkstra (int s) { // Modified Dijkstra's Algorithm
         initSSSP(s);
-
-        List<Integer> backtrack = new ArrayList<Integer>();
 
         DijkstraComparator dc = new DijkstraComparator();
         PriorityQueue<Pair> pq = new PriorityQueue<Pair>(dc);
