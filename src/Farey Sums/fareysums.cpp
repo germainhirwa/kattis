@@ -44,7 +44,7 @@ int main() {
     while (q--) {
         int c, x;
         cin >> c >> x;
-        cout << c << " " << rs[x] + 1 << '\n';
+        cout << c << " " << 3 * rs[x] - 1 << "/2" << '\n';
     }
 
     return 0;
