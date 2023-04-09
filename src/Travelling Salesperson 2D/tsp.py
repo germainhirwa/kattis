@@ -1,14 +1,6 @@
-from random import randint, random, shuffle
-from math import exp, hypot
-import sys
-sys.setrecursionlimit(1005)
-
-def swap(s, m, n):
-    i, j = min(m, n), max(m, n)
-    while i < j:
-        s[i], s[j] = s[j], s[i]
-        i += 1
-        j -= 1
+from random import randint, seed
+from math import hypot
+from time import time
 
 def cost(G, s):
     l = 0
@@ -16,104 +8,116 @@ def cost(G, s):
     l += G[s[-1]][s[0]]
     return l
 
-def mst(G):
-    st = []
-    a, b = [(1e9, i) for i in range(N)], [1]*N
-    a[0] = (0, 0)
-    while len(st) != N:
-        mi, mv = 0, a[0]
-        for i in range(1, N):
-            if a[i] < mv: mi, mv = i, a[i]
-        st.append((mi, mv))
-        a[mi], b[mi] = (1e9, mi), 0
-        for w in range(N):
-            if b[w] and a[w] > (G[mi][w], mi):
-                a[w] = (G[mi][w], mi)
-    g = [[] for _ in range(N)]
-    for t in st[1:]: g[t[1][1]].append(t[0]), g[t[0]].append(t[1][1])
-    return g
+def tsp_greedy(G):
+    used = [0]*N
+    tour = [0]
+    used[0] = 1
+    for i in range(1, N):
+        best =  -1
+        for j in range(N):
+            if not used[j] and (best == -1 or G[tour[i-1]][j] < G[tour[i-1]][best]): best = j
+        tour.append(best)
+        used[best] = True
+    return tour
 
-def tsp_sa(G, s=None, lim=250_000):
-    # simulated annealing
-    if s == None: s = list(range(N))
-    c = cost(G, s)
-    ntrial = 1
+def tsp_k_opt(G, asp_ratio=2, tabu_tenure=7):
+    tour = tsp_greedy(G)
+    best_tour, best_cost = tour, cost(G, tour)
 
-    # hyperparameter
-    T = 10_000_000
-    alpha = 0.99
+    def _4_opt(tour):
+        a = randint(1, N//4)
+        b = a + randint(1, N//4)
+        c = b + randint(1, N//4)
+        return [*tour[:a], *tour[c:], *tour[b:c], *tour[a:b]]
 
-    shuffle(s)
-    while ntrial <= lim:
-        n = randint(0, N-1)
-        while True:
-            m = randint(0, N-1)
-            if n != m: break
-        swap(s, m, n)
-        c1 = cost(G, s)
-        if c1 < c or random() < exp((c-c1)/T): c = c1
-        else: swap(s, m, n)
-        T = alpha*T
-        ntrial += 1
-    return s
+    def _2_opt(tour, asp_ratio, tabu_tenure, TIME_LIMIT):
+        def decrement_tabu():
+            k = N//2
+            for i in range(k):
+                for j in range(k):
+                    if tabu_list[i][j] > 0: tabu_list[i][j] = tabu_list[j][i] = tabu_list[i][j] - 1
 
-def tsp_mst(G):
-    g = mst(G)
-    st, vis = [], {0}
-    def dfs(u):
-        st.append(u)
-        for i in g[u]:
-            if i not in vis: vis.add(i), dfs(i)
-    dfs(0)
-    return st
+        tabu_list = [[0]*N for _ in range(N)]
+        original_tour = local_opt_tour = list(tour)
+        original_cost = local_opt_cost = cost(G, tour)
+        best_cost, tour = original_cost, original_tour
+        while time() - t <= TIME_LIMIT:
+            is_local_opt = False
+            while not is_local_opt and time() - t <= TIME_LIMIT:
+                is_local_opt = True
+                for i in range(N):
+                    for k in range(i+1, N-1):
+                        iB = N-1 if i == 0 else i-1
+                        kA = 0 if k == N-1 else k+1
+                        new_cost = best_cost - G[tour[i]][tour[iB]] - G[tour[k]][tour[kA]] + G[tour[iB]][tour[k]] + G[tour[i]][tour[kA]]
+                        if (new_cost < best_cost and tabu_list[i][k] == 0) or new_cost * asp_ratio < best_cost:
+                            if i == 0:  tour = [*tour[:i], *tour[k::-1], *tour[k+1:]]
+                            else:       tour = [*tour[:i], *tour[k:i-1:-1], *tour[k+1:]]
+                            best_cost = new_cost
+                            is_local_opt = False
+                            tabu_list[i][k] = tabu_tenure
+                        if time() - t > TIME_LIMIT: return tour
+                    if time() - t > TIME_LIMIT: return tour
+                decrement_tabu()
+            if best_cost < local_opt_cost:
+                local_opt_tour = tour
+                local_opt_cost = best_cost
+        return local_opt_tour
 
-def tsp_chris(G):
-    # a work in progress, expected to give better than MST when it's done
-    g = mst(G)
-    odd = [i for i in range(N) if len(g[i]) % 2]
+    def _2half_opt(tour, TIME_LIMIT):
+        can_improve = True
+        while can_improve and time() - t <= TIME_LIMIT:
+            can_improve = False
+            for i in range(N-2):
+                for j in range(i+3, N-1):
+                    a, b, c, d, e = *tour[i:i+3], *tour[j:j+2]
+                    if G[a][c] + G[d][b] + G[b][e] < G[a][b] + G[b][c] + G[d][e]:
+                        can_improve = True
+                        tour = [*tour[:i+1], *tour[i+2:j+1], tour[i+1], *tour[j+1:]]
+                    if time() - t > TIME_LIMIT: return tour
+                if time() - t > TIME_LIMIT: return tour
+        return tour
 
-    # greedy maximum matching :)
-    el = []
-    for i in range(len(odd)):
-        for j in range(i+1, len(odd)): el.append((odd[i], odd[j], G[odd[i]][odd[j]]))
-    el.sort(key=lambda x: -x[-1])
-    m, vis = [], set()
-    for u, v, _ in el:
-        if len(m) == len(odd) // 2: break
-        if u in vis or v in vis: continue
-        m.append((u, v)), vis.add(u), vis.add(v)
-    for u, v in m: g[u].append(v), g[v].append(u)
+    def _3_opt(tour, TIME_LIMIT):
+        can_improve = True
+        best_cost = cost(G, tour)
+        while can_improve and time() - t <= TIME_LIMIT:
+            can_improve = False
+            for i in range(1, N):
+                for j in range(i+1, N):
+                    rem = best_cost - (G[tour[i]][tour[i-1]] + G[tour[j]][tour[j-1]] + G[tour[N-1]][tour[0]])
+                    t1_cost = rem + G[tour[i-1]][tour[j]] + G[tour[N-1]][tour[i]] + G[tour[j-1]][tour[0]]
+                    t2_cost = rem + G[tour[i-1]][tour[j-1]] + G[tour[N-1]][tour[i]] + G[tour[j]][tour[0]]
+                    best_cost = min(t1_cost, t2_cost, best_cost)
+                    if t1_cost == best_cost:
+                        can_improve = True
+                        best_cost = t1_cost
+                        tour = [*tour[:i], *tour[j:], *tour[i:j]]
+                    elif t2_cost == best_cost:
+                        can_improve = True
+                        best_cost = t2_cost
+                        tour = [*tour[:i], *tour[j-1:i-1:-1], *tour[:j-1:-1]]
+                    if time() - t > TIME_LIMIT: return tour
+                if time() - t > TIME_LIMIT: return tour
+        return tour
 
-    # eulerian circuit using hierholzer's
-    a, idx, st = [], [0]*N, [0]
-    while st:
-        u = st[-1]
-        if idx[u] < len(g[u]):
-            st.append(g[u][idx[u]])
-            idx[u] += 1
-        else:
-            a.append(u)
-            st.pop()
-    s, vis = [], set()
-    for i in a[::-1]:
-        if i in vis: continue
-        vis.add(i), s.append(i)
-    return s
-
-def L1(x, y):
-    return abs(x) + abs(y)
-
-def L2(x, y):
-    return round(hypot(x, y))
+    t = time()
+    while time() - t < 1.8:
+        #tour = _4_opt(tour)
+        tour = _2_opt(tour, asp_ratio, tabu_tenure, 1.8)
+        tour = _2half_opt(tour, 1.8)
+        tour = _3_opt(tour, 1.8)
+        c = cost(G, tour)
+        if c < best_cost: best_tour, best_cost = tour, c
+    return best_tour
 
 N = int(input())
-if N == 1: print(0)
+if N < 4:
+    for i in range(N): print(i)
 else:
     p = [list(map(float, input().split())) for _ in range(N)]
     G = [[0]*N for _ in range(N)]
     for i in range(N):
-        for j in range(i+1, N): G[i][j] = G[j][i] = L2(p[i][0]-p[j][0], p[i][1]-p[j][1])
-    s = tsp_sa(G, tsp_mst(G))
-    for i in s: print(i)
-    #print('Initial cost:', cost(G, list(range(N))))
-    #print('Cost:'.ljust(13), cost(G, s))
+        for j in range(i+1, N): G[i][j] = G[j][i] = round(hypot(p[i][0]-p[j][0], p[i][1]-p[j][1]))
+    s = tsp_k_opt(G)
+    [*map(print, s)]; #print('Greedy cost:', cost(G, tsp_greedy(G))); print('k-opt:'.ljust(12), cost(G, s))
