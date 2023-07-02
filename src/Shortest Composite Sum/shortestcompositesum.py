@@ -1,0 +1,1 @@
+n=int(input());print(2,i:=n%2*5+4,n-i)

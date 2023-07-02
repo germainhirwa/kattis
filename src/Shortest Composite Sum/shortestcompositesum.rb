@@ -1,0 +1,1 @@
+n=gets.to_i;p 2,i=n%2*5+4,n-i
