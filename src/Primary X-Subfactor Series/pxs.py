@@ -1,5 +1,5 @@
 import sys
-from collections import deque, defaultdict, Counter
+from collections import deque, defaultdict
 
 mem = {}
 def ps(n):
