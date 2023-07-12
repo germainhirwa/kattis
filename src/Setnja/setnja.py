@@ -1,3 +1,3 @@
 s=m=1
-for i in input():s*=1+(i!='P')+3*(a:=i<'A');s+=(i in'R*')*m;m*=1+2*a
+for i in input():s=(5*s+m,2*s+m,2*s,s)[ord(i)%7%4];m*=3*(i<'A')|1
 print(s)
