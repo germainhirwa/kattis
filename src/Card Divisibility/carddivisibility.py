@@ -1,0 +1,1 @@
+L,R=map(int,input().split());print((L+R)*(R-L+1)*5%9)
