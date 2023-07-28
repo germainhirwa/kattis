@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Keystrokes {
+public class Lyklagangriti {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);

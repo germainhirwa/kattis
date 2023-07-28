@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Fox {
+public class WhatDoesTheFoxSay {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);

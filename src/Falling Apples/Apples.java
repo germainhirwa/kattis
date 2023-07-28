@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class FallingApples {
+public class Apples {
     public static void main(String[] args) throws IOException {
         BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter writer = new PrintWriter(System.out);

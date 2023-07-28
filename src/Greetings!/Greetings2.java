@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Greetings {
+public class Greetings2 {
     public static void main(String[] args) throws IOException {
         InputStreamReader inp = new InputStreamReader(System.in);
         BufferedReader sc = new BufferedReader(inp);

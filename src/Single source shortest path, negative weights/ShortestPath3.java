@@ -3,7 +3,7 @@
 import java.io.*;
 import java.util.*;
 
-public class ShortestPath {
+public class ShortestPath3 {
     static class Reader {
         final private int BUFFER_SIZE = 1 << 16;
         private DataInputStream din;
