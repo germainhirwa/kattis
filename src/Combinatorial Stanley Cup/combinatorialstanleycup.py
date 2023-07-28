@@ -1,0 +1,1 @@
+print(1<<bin(int(input())).count('1'))
