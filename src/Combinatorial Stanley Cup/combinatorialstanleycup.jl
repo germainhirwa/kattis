@@ -1,0 +1,1 @@
+print(1<<count_ones(parse(Int,readline())))

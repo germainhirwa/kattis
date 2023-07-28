@@ -1,0 +1,1 @@
+f=n=>n&&n%2+f(n>>1);print(1<<f(readline()))
