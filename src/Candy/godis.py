@@ -1,0 +1,1 @@
+c=[[*map(int,input().split())]for _ in range(int(input()))];print(max(sum(max(sum(t[i+1]*(2*((x:=t[i])>0)-1)*(2*(m&(1<<(abs(x)-1))>0)-1)for i in range(1,2*t[0],2)),0)for t in c)for m in range(1024)))
