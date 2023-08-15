@@ -1,3 +1,1 @@
-import re
-name = input()
-print("".join(re.findall(r"[A-Z]",name)))
+import re;print(re.sub(r'[^A-Z]','',input()))
