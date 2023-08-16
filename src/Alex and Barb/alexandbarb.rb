@@ -1,0 +1,1 @@
+k,m,n=gets.split.map &:to_i;$><<(m>k%(m+n)?"Barb":"Alex")
