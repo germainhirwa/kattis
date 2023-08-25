@@ -1,0 +1,1 @@
+n=int(input())+1;b=len(bin(n))-3;print(bin(n-(1<<b))[2:].zfill(b).replace('0','4').replace('1','7'))
