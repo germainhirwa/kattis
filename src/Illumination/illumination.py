@@ -26,7 +26,7 @@ def DFS(s, t):
                 if not vis[v]: stack.append(2*v)
     return 1
 for i in range(2*k):
-    if i not in vis: DFS(i, True)
+    if not vis[i]: DFS(i, True)
 vis = [0]*2*k
 for i in top[::-1]:
     if not vis[i]: scc += DFS(i, False)
