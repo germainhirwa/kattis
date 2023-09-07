@@ -1,0 +1,1 @@
+print(min(x.count('J')for x in zip(*(input().split()for _ in'.'*int(input())))))
