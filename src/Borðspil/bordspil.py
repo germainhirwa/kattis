@@ -1,0 +1,1 @@
+n,m=map(int,input().split());n+=2;print(['Unnar','Arnar'][m<n-n//3])
