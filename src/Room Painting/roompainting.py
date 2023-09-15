@@ -1,0 +1,2 @@
+import sys; input = sys.stdin.readline; from bisect import *
+n, m = map(int, input().split()); a = sorted(int(input()) for _ in range(n)); print(sum(a[bisect_left(a, k:=int(input()))]-k for _ in range(m)))
