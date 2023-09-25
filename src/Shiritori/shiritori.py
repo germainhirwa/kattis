@@ -1,10 +1,9 @@
-import sys
-
+import sys; input = sys.stdin.readline
 n = int(input())
-prev = input()
+prev = input().strip()
 mem = {prev}
 for i in range(n - 1):
-    w = input()
+    w = input().strip()
     if w[0] == prev[-1] and w not in mem:
         prev = w
         mem.add(w)
