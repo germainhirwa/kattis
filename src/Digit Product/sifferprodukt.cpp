@@ -9,7 +9,7 @@ int main() {
     bool done = false;
     cin >> n;
     while (!done) {
-        if (n % 10 == 0) {
+        while (n % 10 == 0) {
             n /= 10;
         }
         p *= n % 10;
@@ -17,9 +17,9 @@ int main() {
         if (n == 0) {
             n = p;
             p = 1;
+            if (n < 10)
+                done = true;
         }
-        if (p < 10)
-            done = true;
     }
     cout << n;
 
