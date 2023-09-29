@@ -6,6 +6,6 @@ int main()
 {
     double x;
     cin >> x;
-    cout << fixed << round(x*880000/809);
+    cout << fixed << (int) round(x*880000/809);
     return 0;
 }
