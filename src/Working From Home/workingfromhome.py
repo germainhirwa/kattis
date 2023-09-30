@@ -5,5 +5,5 @@ base, target, eps = m, m, 0
 for i in range(n):
     offset = w[i] - target
     eps += offset >= 0
-    target = base - ceil(offset*p/100)
+    target = base + ceil(-offset*p/100)
 print(eps)
