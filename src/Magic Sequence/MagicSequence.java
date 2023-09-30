@@ -6,52 +6,48 @@ public class MagicSequence {
         Reader sc = new Reader();
         PrintWriter writer = new PrintWriter(System.out);
         int tc = sc.nextInt();
+        int bucks = 31623; // 10**4.5, best case, only two iterations
+        int[] seq = new int[1000000];
         while (tc-- > 0) {
             int n = sc.nextInt();
             long a = sc.nextLong(), b = sc.nextLong(), c = sc.nextLong(), x = sc.nextLong(), y = sc.nextLong();
-            int bucks = 31623; // 10**4.5, best case, only two iterations
 
+            // Populate seq
             long curr = a;
-            long[] seq = new long[n];
-
             for (int i = 0; i < n; i++) {
-                seq[i] = curr;
+                seq[i] = (int) curr;
                 curr = (curr * b + a) % c;
             }
 
             // First iteration
             int[] cnt1 = new int[bucks];
-            for (long i : seq)
-                cnt1[(int) i % bucks]++;
+            for (int i = 0; i < n; i++)
+                cnt1[seq[i] % bucks]++;
             for (int i = 1; i < bucks; i++)
                 cnt1[i] += cnt1[i - 1];
-            long[] seq2 = new long[n];
-            int pos1 = n - 1, el1 = 0;
+            int[] seq2 = new int[n];
+            int pos1 = n-1, el1 = 0;
             while (pos1 >= 0) {
-                el1 = (int) seq[pos1];
-                seq2[cnt1[el1 % bucks] - 1] = el1;
-                cnt1[el1 % bucks]--;
-                pos1--;
+                el1 = seq[pos1--];
+                seq2[--cnt1[el1 % bucks]] = el1;
             }
 
             // Second iteration
             int[] cnt2 = new int[bucks];
-            for (long i : seq2)
-                cnt2[(int) i / bucks]++;
+            for (int i : seq2)
+                cnt2[i / bucks]++;
             for (int i = 1; i < bucks; i++)
                 cnt2[i] += cnt2[i - 1];
-            long[] seq3 = new long[n];
-            int pos2 = n - 1, el2 = 0;
+            int[] seq3 = new int[n];
+            int pos2 = n-1, el2 = 0;
             while (pos2 >= 0) {
-                el2 = (int) seq2[pos2];
-                seq3[cnt2[el2 / bucks] - 1] = el2;
-                cnt2[el2 / bucks]--;
-                pos2--;
+                el2 = seq2[pos2--];
+                seq3[--cnt2[el2 / bucks]] = el2;
             }
 
             // Final extension
             long v = 0;
-            for (long i : seq3)
+            for (int i : seq3)
                 v = (v * x + i) % y;
             writer.println(v);
         }
