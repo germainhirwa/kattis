@@ -24,6 +24,6 @@ for l in list(free):
 for f in free:
     vis = [0] * nfree
     mcbm += aug(f)
-if mcbm != V: print('impossible')
+if mcbm != V: print('Impossible')
 else:
     for i in range(V, 2*V): print(match[i]+1)
