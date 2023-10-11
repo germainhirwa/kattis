@@ -1,1 +1,0 @@
-input(); w = input().split(); print(w[12%len(w)])

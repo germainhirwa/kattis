@@ -1,1 +1,0 @@
-from math import*;a,b,c=map(int,input().split());print(['Oh look, a squirrel!','What an excellent example!'][(a==1)|((c-1)*log(b)==log(c))])

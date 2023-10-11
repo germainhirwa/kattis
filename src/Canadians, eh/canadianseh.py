@@ -1,1 +1,0 @@
-print(['Imposter!', 'Canadian!'][int(input().endswith('eh?'))])

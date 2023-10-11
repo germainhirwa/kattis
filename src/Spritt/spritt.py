@@ -1,1 +1,0 @@
-import sys;x=int(input().split()[1]);print(['Je','Nei'][sum(map(int,sys.stdin))>x]+'bb')

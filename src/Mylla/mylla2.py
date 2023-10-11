@@ -1,1 +1,0 @@
-b=open(0).read()[:11];c=[b[::4],b[1::4],b[2::4],b[::5],b[2::3]]+b.split();print(['Neibb','Jebb']['OOO'in c])

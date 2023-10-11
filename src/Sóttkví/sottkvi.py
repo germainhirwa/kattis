@@ -1,1 +1,0 @@
-n,k,d=map(int,input().split());print(sum(d+k-13>int(input())for _ in'.'*n))

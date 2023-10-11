@@ -1,1 +1,0 @@
-f=input;f();print(max(2*max(a:=[*map(int,f().split())]),sum(a)))

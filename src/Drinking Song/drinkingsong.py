@@ -1,2 +1,0 @@
-n, w = int(input()), input()
-while n: print(f'{n} bottle{"s"*(n>1)} of {w} on the wall, {n} bottle{"s"*(n>1)} of {w}.'); n -= 1; print(f'Take {["it", "one"][n>0]} down, pass it around, {n if n else "no more"} bottle{"s"*(n!=1)} of {w}{" on the wall"*(n>0)}.'), print()

@@ -1,1 +1,0 @@
-console.log(Math.pow(Math.pow(2,parseInt(readline()))+1,2));

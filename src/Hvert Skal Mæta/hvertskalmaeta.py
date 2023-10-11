@@ -1,1 +1,0 @@
-print(['Reykjavik','Akureyri'][input()[-2:]in['ri','gd','ng']])

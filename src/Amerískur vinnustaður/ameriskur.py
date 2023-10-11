@@ -1,1 +1,0 @@
-print(0.09144*int(input()))

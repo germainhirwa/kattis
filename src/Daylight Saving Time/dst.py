@@ -1,1 +1,0 @@
-for _ in range(int(input())): c, s, h, m = input().split(); s, h, m = map(int, (s, h, m)); t = (60*h+m+(1-2*(c<'C'))*s)%1440; print(t//60, t%60)

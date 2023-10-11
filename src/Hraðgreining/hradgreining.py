@@ -1,1 +1,0 @@
-print(['Ekki v','V']['COV'in input()]+'eikur!')

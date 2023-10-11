@@ -1,1 +1,0 @@
-l='abcdefghijklmnopqr';print(' '.join([p+q+r+s for p in l for q in l for r in l for s in l][:int(input().split()[1])]))
